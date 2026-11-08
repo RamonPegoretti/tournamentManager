@@ -1,0 +1,161 @@
+{
+  "app": {
+    "name": "Tournament Manager",
+    "tagline": "Gestisci tornei di scacchi: abbinamenti, risultati e classifiche in diretta."
+  },
+  "nav": {
+    "dashboard": "I miei tornei",
+    "signIn": "Accedi",
+    "signOut": "Esci",
+    "language": "Lingua"
+  },
+  "home": {
+    "title": "Tornei di scacchi, gestiti con calma.",
+    "body": "Prepara un torneo svizzero, all'italiana, a eliminazione diretta o a squadre, inserisci i risultati scacchiera per scacchiera e lascia che i giocatori seguano la classifica dal telefono.",
+    "cta": "Vai ai miei tornei",
+    "ctaSignIn": "Accedi per iniziare"
+  },
+  "login": {
+    "title": "Accedi",
+    "name": "Il tuo nome",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "Almeno 8 caratteri.",
+    "submit": "Accedi",
+    "signUp": "Crea account",
+    "errors": {
+      "invalid": "Inserisci il tuo nome, un'email valida e una password di almeno 8 caratteri.",
+      "credentials": "Email o password errate.",
+      "exists": "Esiste già un account con questa email. Accedi.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "dashboard": {
+    "title": "I miei tornei",
+    "new": "Nuovo torneo",
+    "empty": "Ancora nessun torneo. Crea il primo per iniziare.",
+    "players": "{count, plural, =0 {Nessun giocatore} one {# giocatore} other {# giocatori}}",
+    "rounds": "{count, plural, one {# turno} other {# turni}}"
+  },
+  "status": {
+    "draft": "Bozza",
+    "registration": "Iscrizioni",
+    "running": "In corso",
+    "finished": "Concluso"
+  },
+  "format": {
+    "swiss": "Svizzero",
+    "round_robin": "All'italiana",
+    "knockout": "Eliminazione diretta",
+    "team": "A squadre",
+    "swissHint": "Tutti giocano ogni turno contro avversari con un punteggio simile. Ideale per gli open.",
+    "round_robinHint": "Tutti contro tutti. Ideale per gruppi piccoli.",
+    "knockoutHint": "Chi perde viene eliminato a ogni turno.",
+    "teamHint": "Le squadre si sfidano su più scacchiere."
+  },
+  "tiebreak": {
+    "BH-C1": "Buchholz Cut 1",
+    "BH": "Buchholz",
+    "BH-M1": "Buchholz mediano",
+    "SB": "Sonneborn-Berger",
+    "DE": "Scontro diretto",
+    "WIN": "Numero di vittorie",
+    "BPG": "Partite con il Nero",
+    "ARO": "Media Elo avversari",
+    "PS": "Punteggio progressivo",
+    "KS": "Sistema Koya"
+  },
+  "setup": {
+    "title": "Nuovo torneo",
+    "editTitle": "Impostazioni torneo",
+    "name": "Nome del torneo",
+    "namePlaceholder": "Milano Autumn Open 2026",
+    "location": "Luogo",
+    "startDate": "Data di inizio",
+    "endDate": "Data di fine",
+    "format": "Formula",
+    "rounds": "Numero di turni",
+    "roundsHint": "Puoi cambiarlo finché il primo turno non è abbinato.",
+    "timeControl": "Cadenza",
+    "timeControlPlaceholder": "90'+30\"",
+    "tiebreaks": "Spareggi",
+    "tiebreaksHint": "Seleziona gli spareggi da usare e mettili in ordine. Quelli raccomandati dalla FIDE sono già selezionati.",
+    "moveUp": "Sposta su",
+    "moveDown": "Sposta giù",
+    "resetDefaults": "Ripristina i valori FIDE",
+    "noTiebreaks": "I tornei a eliminazione diretta non usano spareggi.",
+    "create": "Crea torneo",
+    "save": "Salva impostazioni",
+    "saved": "Impostazioni salvate.",
+    "errors": {
+      "name": "Dai un nome al torneo.",
+      "rounds": "I turni devono essere tra 1 e 30.",
+      "dates": "La data di fine non può precedere quella di inizio."
+    }
+  },
+  "tournament": {
+    "players": "Giocatori",
+    "settings": "Impostazioni",
+    "addPlayer": "Aggiungi giocatore",
+    "import": "Importa da foglio di calcolo",
+    "noPlayers": "Ancora nessun giocatore. Aggiungili uno alla volta o importa un foglio di calcolo.",
+    "unrated": "Senza Elo",
+    "remove": "Rimuovi",
+    "removeConfirm": "Rimuovere {name} dal torneo?",
+    "count": "{count, plural, =0 {Nessun giocatore} one {# giocatore} other {# giocatori}}",
+    "averageRating": "Elo medio {value}",
+    "rated": "{count} con Elo",
+    "flags": {
+      "duplicateFide": "Stesso ID FIDE di un altro giocatore",
+      "duplicateName": "Possibile duplicato",
+      "noFide": "Nessun ID FIDE"
+    },
+    "player": "Giocatore"
+  },
+  "player": {
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "fideId": "ID FIDE",
+    "rating": "Elo FIDE",
+    "ratingHint": "Lascia vuoto se senza Elo.",
+    "federation": "Federazione",
+    "birthYear": "Anno di nascita",
+    "club": "Circolo",
+    "email": "Email",
+    "add": "Aggiungi giocatore",
+    "errors": {
+      "lastName": "Inserisci un cognome.",
+      "rating": "L'Elo deve essere tra 1000 e 3000, oppure vuoto se senza Elo.",
+      "fideId": "Un ID FIDE contiene solo cifre.",
+      "email": "Questa email non sembra corretta.",
+      "birthYear": "Inserisci un anno di nascita valido."
+    }
+  },
+  "import": {
+    "title": "Importa giocatori",
+    "body": "Carica un file CSV o incolla righe copiate da Excel o Google Fogli. La prima riga deve contenere le intestazioni delle colonne.",
+    "columns": "Colonne riconosciute: nome (o nome e cognome), ID FIDE, Elo, federazione, anno di nascita, circolo, email. Le intestazioni possono essere in italiano, inglese o spagnolo.",
+    "file": "File CSV",
+    "paste": "Oppure incolla qui",
+    "preview": "Anteprima",
+    "missingName": "Non troviamo una colonna con il nome. Aggiungi un'intestazione come \"Nome\" o \"Cognome\".",
+    "ready": "{ok, plural, one {# giocatore pronto} other {# giocatori pronti}}",
+    "problems": "{count, plural, one {# riga ha un problema e verrà saltata} other {# righe hanno problemi e verranno saltate}}",
+    "line": "Riga {line}",
+    "confirm": "Importa {count, plural, one {# giocatore} other {# giocatori}}",
+    "done": "{count, plural, one {Importato # giocatore.} other {Importati # giocatori.}}",
+    "back": "Torna ai giocatori",
+    "errors": {
+      "missingName": "nome mancante",
+      "badFideId": "l'ID FIDE non è un numero",
+      "badRating": "Elo fuori intervallo",
+      "badBirthYear": "anno di nascita non valido",
+      "badEmail": "email non valida"
+    }
+  },
+  "common": {
+    "cancel": "Annulla",
+    "back": "Indietro",
+    "optional": "facoltativo"
+  }
+}
