@@ -2,8 +2,8 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-const url = process.env.DATABASE_URL;
-if (!url) throw new Error("DATABASE_URL is not set");
+// postgres() connects lazily, so a missing URL only fails when a query runs (not at build time).
+const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL ?? "postgres://localhost:5432/missing-database-url";
 
 // Reuse the connection across hot reloads in development.
 const globalForDb = globalThis as unknown as { sql?: ReturnType<typeof postgres> };
