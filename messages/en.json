@@ -1,0 +1,161 @@
+{
+  "app": {
+    "name": "Tournament Manager",
+    "tagline": "Run chess tournaments: pairings, results and live standings."
+  },
+  "nav": {
+    "dashboard": "My tournaments",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Chess tournaments, run calmly.",
+    "body": "Set up a Swiss, round robin, knockout or team event, enter results board by board, and let players follow live standings on their phones.",
+    "cta": "Go to my tournaments",
+    "ctaSignIn": "Sign in to start"
+  },
+  "login": {
+    "title": "Sign in",
+    "name": "Your name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "submit": "Sign in",
+    "signUp": "Create account",
+    "errors": {
+      "invalid": "Fill in your name, a valid email and a password of at least 8 characters.",
+      "credentials": "Wrong email or password.",
+      "exists": "An account with this email already exists. Sign in instead.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "dashboard": {
+    "title": "My tournaments",
+    "new": "New tournament",
+    "empty": "No tournaments yet. Create your first one to get started.",
+    "players": "{count, plural, =0 {No players} one {# player} other {# players}}",
+    "rounds": "{count, plural, one {# round} other {# rounds}}"
+  },
+  "status": {
+    "draft": "Draft",
+    "registration": "Registration",
+    "running": "Running",
+    "finished": "Finished"
+  },
+  "format": {
+    "swiss": "Swiss",
+    "round_robin": "Round robin",
+    "knockout": "Knockout",
+    "team": "Team",
+    "swissHint": "Everyone plays every round against opponents with a similar score. Best for open events.",
+    "round_robinHint": "Everyone plays everyone. Best for small groups.",
+    "knockoutHint": "Losers are eliminated each round.",
+    "teamHint": "Teams play matches on several boards."
+  },
+  "tiebreak": {
+    "BH-C1": "Buchholz Cut 1",
+    "BH": "Buchholz",
+    "BH-M1": "Median Buchholz",
+    "SB": "Sonneborn-Berger",
+    "DE": "Direct encounter",
+    "WIN": "Number of wins",
+    "BPG": "Games with Black",
+    "ARO": "Average rating of opponents",
+    "PS": "Progressive score",
+    "KS": "Koya system"
+  },
+  "setup": {
+    "title": "New tournament",
+    "editTitle": "Tournament settings",
+    "name": "Tournament name",
+    "namePlaceholder": "Milano Autumn Open 2026",
+    "location": "Location",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "format": "Format",
+    "rounds": "Number of rounds",
+    "roundsHint": "You can change this until the first round is paired.",
+    "timeControl": "Time control",
+    "timeControlPlaceholder": "90'+30\"",
+    "tiebreaks": "Tiebreaks",
+    "tiebreaksHint": "Tick the tiebreaks to use and put them in order. FIDE-recommended ones are pre-selected.",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "resetDefaults": "Reset to FIDE defaults",
+    "noTiebreaks": "Knockout events don't use tiebreaks.",
+    "create": "Create tournament",
+    "save": "Save settings",
+    "saved": "Settings saved.",
+    "errors": {
+      "name": "Give the tournament a name.",
+      "rounds": "Rounds must be between 1 and 30.",
+      "dates": "The end date can't be before the start date."
+    }
+  },
+  "tournament": {
+    "players": "Players",
+    "settings": "Settings",
+    "addPlayer": "Add player",
+    "import": "Import from spreadsheet",
+    "noPlayers": "No players yet. Add them one by one or import a spreadsheet.",
+    "unrated": "Unrated",
+    "remove": "Remove",
+    "removeConfirm": "Remove {name} from the tournament?",
+    "count": "{count, plural, =0 {No players} one {# player} other {# players}}",
+    "averageRating": "Average rating {value}",
+    "rated": "{count} rated",
+    "flags": {
+      "duplicateFide": "Same FIDE ID as another player",
+      "duplicateName": "Possible duplicate",
+      "noFide": "No FIDE ID"
+    },
+    "player": "Player"
+  },
+  "player": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "fideId": "FIDE ID",
+    "rating": "FIDE rating",
+    "ratingHint": "Leave empty if unrated.",
+    "federation": "Federation",
+    "birthYear": "Birth year",
+    "club": "Club",
+    "email": "Email",
+    "add": "Add player",
+    "errors": {
+      "lastName": "Enter a last name.",
+      "rating": "Rating must be between 1000 and 3000, or empty for unrated.",
+      "fideId": "A FIDE ID contains only digits.",
+      "email": "That email doesn't look right.",
+      "birthYear": "Enter a valid birth year."
+    }
+  },
+  "import": {
+    "title": "Import players",
+    "body": "Upload a CSV file or paste rows copied from Excel or Google Sheets. The first row must be the column headers.",
+    "columns": "Recognised columns: name (or first name and last name), FIDE ID, rating, federation, birth year, club, email. Headers can be in English, Italian or Spanish.",
+    "file": "CSV file",
+    "paste": "Or paste here",
+    "preview": "Preview",
+    "missingName": "We couldn't find a name column. Add a header such as \"Name\" or \"Last name\".",
+    "ready": "{ok, plural, one {# player ready} other {# players ready}}",
+    "problems": "{count, plural, one {# row has a problem and will be skipped} other {# rows have problems and will be skipped}}",
+    "line": "Row {line}",
+    "confirm": "Import {count, plural, one {# player} other {# players}}",
+    "done": "{count, plural, one {Imported # player.} other {Imported # players.}}",
+    "back": "Back to players",
+    "errors": {
+      "missingName": "missing name",
+      "badFideId": "FIDE ID is not a number",
+      "badRating": "rating out of range",
+      "badBirthYear": "invalid birth year",
+      "badEmail": "invalid email"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "back": "Back",
+    "optional": "optional"
+  }
+}

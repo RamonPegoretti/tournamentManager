@@ -1,0 +1,161 @@
+{
+  "app": {
+    "name": "Tournament Manager",
+    "tagline": "Organiza torneos de ajedrez: emparejamientos, resultados y clasificaciones en directo."
+  },
+  "nav": {
+    "dashboard": "Mis torneos",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "language": "Idioma"
+  },
+  "home": {
+    "title": "Torneos de ajedrez, sin estrés.",
+    "body": "Prepara un torneo suizo, round robin, eliminatorio o por equipos, introduce los resultados tablero a tablero y deja que los jugadores sigan la clasificación en directo desde el móvil.",
+    "cta": "Ir a mis torneos",
+    "ctaSignIn": "Inicia sesión para empezar"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "name": "Tu nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "passwordHint": "Al menos 8 caracteres.",
+    "submit": "Iniciar sesión",
+    "signUp": "Crear cuenta",
+    "errors": {
+      "invalid": "Introduce tu nombre, un correo válido y una contraseña de al menos 8 caracteres.",
+      "credentials": "Correo o contraseña incorrectos.",
+      "exists": "Ya existe una cuenta con este correo. Inicia sesión.",
+      "unknown": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "dashboard": {
+    "title": "Mis torneos",
+    "new": "Nuevo torneo",
+    "empty": "Aún no hay torneos. Crea el primero para empezar.",
+    "players": "{count, plural, =0 {Sin jugadores} one {# jugador} other {# jugadores}}",
+    "rounds": "{count, plural, one {# ronda} other {# rondas}}"
+  },
+  "status": {
+    "draft": "Borrador",
+    "registration": "Inscripción",
+    "running": "En curso",
+    "finished": "Finalizado"
+  },
+  "format": {
+    "swiss": "Suizo",
+    "round_robin": "Round robin",
+    "knockout": "Eliminatorio",
+    "team": "Por equipos",
+    "swissHint": "Todos juegan cada ronda contra rivales con una puntuación parecida. Ideal para abiertos.",
+    "round_robinHint": "Todos contra todos. Ideal para grupos pequeños.",
+    "knockoutHint": "Quien pierde queda eliminado en cada ronda.",
+    "teamHint": "Los equipos juegan encuentros en varios tableros."
+  },
+  "tiebreak": {
+    "BH-C1": "Buchholz Cut 1",
+    "BH": "Buchholz",
+    "BH-M1": "Buchholz mediano",
+    "SB": "Sonneborn-Berger",
+    "DE": "Encuentro directo",
+    "WIN": "Número de victorias",
+    "BPG": "Partidas con negras",
+    "ARO": "Media de Elo de los rivales",
+    "PS": "Puntuación progresiva",
+    "KS": "Sistema Koya"
+  },
+  "setup": {
+    "title": "Nuevo torneo",
+    "editTitle": "Ajustes del torneo",
+    "name": "Nombre del torneo",
+    "namePlaceholder": "Milano Autumn Open 2026",
+    "location": "Lugar",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "format": "Sistema",
+    "rounds": "Número de rondas",
+    "roundsHint": "Puedes cambiarlo hasta que se empareje la primera ronda.",
+    "timeControl": "Ritmo de juego",
+    "timeControlPlaceholder": "90'+30\"",
+    "tiebreaks": "Desempates",
+    "tiebreaksHint": "Marca los desempates que quieres usar y ordénalos. Los recomendados por la FIDE ya están marcados.",
+    "moveUp": "Subir",
+    "moveDown": "Bajar",
+    "resetDefaults": "Restablecer valores FIDE",
+    "noTiebreaks": "Los torneos eliminatorios no usan desempates.",
+    "create": "Crear torneo",
+    "save": "Guardar ajustes",
+    "saved": "Ajustes guardados.",
+    "errors": {
+      "name": "Ponle un nombre al torneo.",
+      "rounds": "Las rondas deben estar entre 1 y 30.",
+      "dates": "La fecha de fin no puede ser anterior a la de inicio."
+    }
+  },
+  "tournament": {
+    "players": "Jugadores",
+    "settings": "Ajustes",
+    "addPlayer": "Añadir jugador",
+    "import": "Importar desde hoja de cálculo",
+    "noPlayers": "Aún no hay jugadores. Añádelos uno a uno o importa una hoja de cálculo.",
+    "unrated": "Sin Elo",
+    "remove": "Quitar",
+    "removeConfirm": "¿Quitar a {name} del torneo?",
+    "count": "{count, plural, =0 {Sin jugadores} one {# jugador} other {# jugadores}}",
+    "averageRating": "Elo medio {value}",
+    "rated": "{count} con Elo",
+    "flags": {
+      "duplicateFide": "Mismo ID FIDE que otro jugador",
+      "duplicateName": "Posible duplicado",
+      "noFide": "Sin ID FIDE"
+    },
+    "player": "Jugador"
+  },
+  "player": {
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "fideId": "ID FIDE",
+    "rating": "Elo FIDE",
+    "ratingHint": "Déjalo vacío si no tiene Elo.",
+    "federation": "Federación",
+    "birthYear": "Año de nacimiento",
+    "club": "Club",
+    "email": "Correo electrónico",
+    "add": "Añadir jugador",
+    "errors": {
+      "lastName": "Introduce un apellido.",
+      "rating": "El Elo debe estar entre 1000 y 3000, o vacío si no tiene.",
+      "fideId": "Un ID FIDE solo contiene dígitos.",
+      "email": "Ese correo no parece correcto.",
+      "birthYear": "Introduce un año de nacimiento válido."
+    }
+  },
+  "import": {
+    "title": "Importar jugadores",
+    "body": "Sube un archivo CSV o pega filas copiadas de Excel o Google Sheets. La primera fila debe contener los encabezados de las columnas.",
+    "columns": "Columnas reconocidas: nombre (o nombre y apellido), ID FIDE, Elo, federación, año de nacimiento, club, correo. Los encabezados pueden estar en español, inglés o italiano.",
+    "file": "Archivo CSV",
+    "paste": "O pega aquí",
+    "preview": "Vista previa",
+    "missingName": "No encontramos una columna con el nombre. Añade un encabezado como \"Nombre\" o \"Apellido\".",
+    "ready": "{ok, plural, one {# jugador listo} other {# jugadores listos}}",
+    "problems": "{count, plural, one {# fila tiene un problema y se omitirá} other {# filas tienen problemas y se omitirán}}",
+    "line": "Fila {line}",
+    "confirm": "Importar {count, plural, one {# jugador} other {# jugadores}}",
+    "done": "{count, plural, one {Se importó # jugador.} other {Se importaron # jugadores.}}",
+    "back": "Volver a jugadores",
+    "errors": {
+      "missingName": "falta el nombre",
+      "badFideId": "el ID FIDE no es un número",
+      "badRating": "Elo fuera de rango",
+      "badBirthYear": "año de nacimiento no válido",
+      "badEmail": "correo no válido"
+    }
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "optional": "opcional"
+  }
+}

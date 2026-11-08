@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* "Night Arbiter" palette with the Open Board layout (design direction D). */
+@theme {
+  --color-bg: #0e1013;
+  --color-surface: #161a20;
+  --color-surface-2: #1c2128;
+  --color-line: #262c35;
+  --color-ink: #e6e9ee;
+  --color-muted: #8b93a1;
+  --color-accent: #4c8dff;
+  --color-accent-ink: #0b1a33;
+  --color-ok: #3fb97a;
+  --color-warn: #f2a93b;
+  --color-bad: #f06a6a;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@utility card {
+    @apply rounded-xl border border-line bg-surface;
+  }
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+@utility btn-primary {
+    @apply btn bg-accent text-accent-ink hover:bg-[#6aa1ff];
+  }
+
+@utility btn-ghost {
+    @apply btn border border-line bg-surface-2 text-ink hover:border-muted;
+  }
+
+@utility btn-danger {
+    @apply btn border border-line text-bad hover:border-bad;
+  }
+
+@utility field-label {
+    @apply mb-1 block text-sm font-medium text-ink;
+  }
+
+@utility input {
+    @apply w-full rounded-lg border border-line bg-surface-2 px-3 py-2 text-sm text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none;
+  }
+
+@utility hint {
+    @apply mt-1 text-xs text-muted;
+  }
+
+@utility error {
+    @apply mt-1 text-xs text-bad;
+  }
+
+@utility chip {
+    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium;
+  }
