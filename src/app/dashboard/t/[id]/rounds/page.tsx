@@ -6,6 +6,7 @@ import { displayName, fmtPoints } from "@/lib/names";
 import { getOwnedTournament, loadEventData } from "@/lib/tournaments";
 import { BoardCard } from "./BoardCard";
 import { RoundControls } from "./RoundControls";
+import { RequestsPanel } from "./RequestsPanel";
 
 export default async function Rounds({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ round?: string }> }) {
   const { id } = await params;
@@ -39,6 +40,7 @@ export default async function Rounds({ params, searchParams }: { params: Promise
 
   return (
     <div className="space-y-5">
+      <RequestsPanel tournamentId={tour.id} players={byId} />
       {data.rounds.length > 0 && (
         <nav className="flex flex-wrap gap-2" aria-label={t("title", { n: "" })}>
           {data.rounds.map((r) => (

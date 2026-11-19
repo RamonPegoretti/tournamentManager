@@ -1,12 +1,13 @@
 "use server";
 
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { games, players, rounds, tournaments } from "@/db/schema";
 import { requireUser } from "@/lib/auth";
 import { RESULTS, type GameResult } from "@/lib/chess-types";
 import { PairingError, pairDutch } from "@/lib/pairing";
+import { applyResult } from "@/lib/results";
 import { getOwnedTournament, loadEventData } from "@/lib/tournaments";
 
 export type ActionResult = { error?: string; detail?: string; ok?: boolean };
@@ -102,18 +103,7 @@ export async function setResult(tournamentId: string, gameId: string, result: Ga
   const [g] = await db.select().from(games).where(and(eq(games.id, gameId), eq(games.tournamentId, t.id)));
   if (!g || g.kind !== "game") return { error: "badGame" };
   // Older rounds can still be corrected; standings are recomputed from scratch on every view.
-  await db.update(games).set({ result, updatedAt: new Date() }).where(eq(games.id, g.id));
-
-  const [{ missing }] = await db
-    .select({ missing: sql<number>`count(*)::int` })
-    .from(games)
-    .where(and(eq(games.roundId, g.roundId), eq(games.kind, "game"), isNull(games.result)));
-  await db.update(rounds).set({ status: missing === 0 ? "finished" : "paired" }).where(eq(rounds.id, g.roundId));
-
-  const [last] = await db.select().from(rounds).where(eq(rounds.tournamentId, t.id)).orderBy(desc(rounds.number)).limit(1);
-  const done = !!t.rounds && last?.number === t.rounds && last.status === "finished";
-  const status = done ? "finished" : "running";
-  if (t.status !== status) await db.update(tournaments).set({ status }).where(eq(tournaments.id, t.id));
+  await applyResult(t, g, result);
   revalidateEvent(t.id, t.slug);
   return { ok: true };
 }

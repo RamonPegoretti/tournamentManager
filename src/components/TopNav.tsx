@@ -19,6 +19,9 @@ export async function TopNav() {
             <Link href="/dashboard" className="rounded-md px-3 py-1.5 text-muted hover:bg-surface-2 hover:text-ink">
               {t("nav.dashboard")}
             </Link>
+            <Link href="/requests" className="rounded-md px-3 py-1.5 text-muted hover:bg-surface-2 hover:text-ink">
+              {t("nav.requests")}
+            </Link>
           </nav>
         )}
         <div className="ml-auto flex items-center gap-3">

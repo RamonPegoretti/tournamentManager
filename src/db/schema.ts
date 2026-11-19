@@ -156,3 +156,33 @@ export type Game = typeof games.$inferSelect;
 export type Tournament = typeof tournaments.$inferSelect;
 export type Player = typeof players.$inferSelect;
 export type NewPlayer = typeof players.$inferInsert;
+
+export const requestStatusEnum = pgEnum("request_status", ["pending", "approved", "denied"]);
+
+/** A player's request to correct a game result; the organizer approves or denies it. */
+export const resultRequests = pgTable(
+  "result_requests",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tournamentId: uuid("tournament_id")
+      .notNull()
+      .references(() => tournaments.id, { onDelete: "cascade" }),
+    gameId: uuid("game_id")
+      .notNull()
+      .references(() => games.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    // Result shown when the request was made, and the one the player asks for.
+    currentResult: gameResultEnum("current_result"),
+    proposedResult: gameResultEnum("proposed_result").notNull(),
+    message: text("message"),
+    status: requestStatusEnum("status").notNull().default("pending"),
+    response: text("response"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    resolvedAt: timestamp("resolved_at", { withTimezone: true }),
+  },
+  (t) => [index("result_requests_tournament_idx").on(t.tournamentId, t.status), index("result_requests_user_idx").on(t.userId)],
+);
+
+export type ResultRequest = typeof resultRequests.$inferSelect;

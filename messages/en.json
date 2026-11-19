@@ -7,7 +7,8 @@
     "dashboard": "My tournaments",
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "language": "Language"
+    "language": "Language",
+    "requests": "My requests"
   },
   "home": {
     "title": "Chess tournaments, run calmly.",
@@ -28,7 +29,8 @@
       "credentials": "Wrong email or password.",
       "exists": "An account with this email already exists. Sign in instead.",
       "unknown": "Something went wrong. Please try again."
-    }
+    },
+    "toContinue": "Sign in or create an account to continue."
   },
   "dashboard": {
     "title": "My tournaments",
@@ -243,7 +245,8 @@
     "register": "Register for this tournament",
     "entries": "{count, plural, one {# entry} other {# entries}}",
     "pendingEntry": "pending",
-    "unrated": "unrated"
+    "unrated": "unrated",
+    "report": "Report result"
   },
   "registration": {
     "selfSignup": "Self-signup",
@@ -324,5 +327,42 @@
     "emailBody": "Hi {name},\n\nThanks for registering for {tournament}. The organizer will review the player list before the start.\n\nView or change your registration: {link}\n",
     "declaredRating": "Your current FIDE rating",
     "declaredRatingHint": "Leave empty if FIDE lists you as unrated. The organizer will check it."
+  },
+  "requests": {
+    "reportTitle": "Report a wrong result",
+    "reportHint": "Tell the organizer what the correct result is. They will approve or deny it.",
+    "gameLine": "Round {round} · Board {board}",
+    "currentResult": "Current result",
+    "noResult": "no result",
+    "correctResult": "Correct result",
+    "message": "Message for the organizer",
+    "messagePlaceholder": "Optional: what happened?",
+    "send": "Send request",
+    "sent": "Request sent. You'll see the organizer's answer under My requests.",
+    "mine": "My requests",
+    "noneMine": "You haven't sent any requests.",
+    "yourStatus": {
+      "pending": "You asked for {result}. Waiting for the organizer.",
+      "approved": "Your request for {result} was approved.",
+      "denied": "Your request for {result} was denied."
+    },
+    "status": {
+      "pending": "Waiting",
+      "approved": "Approved",
+      "denied": "Denied"
+    },
+    "waiting": "{count, plural, one {# result request waits} other {# result requests wait}} for you",
+    "changedSince": "result changed since the request",
+    "from": "From {name} ({email})",
+    "isPlayer": "plays in this game as {player}",
+    "approve": "Approve and apply",
+    "deny": "Deny",
+    "responsePlaceholder": "Optional reply to the player",
+    "confirmDeny": "Deny request",
+    "errors": {
+      "badGame": "This game can't be reported.",
+      "chooseResult": "Choose the correct result.",
+      "sameResult": "That's already the result."
+    }
   }
 }
