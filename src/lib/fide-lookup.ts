@@ -8,7 +8,7 @@ export async function lookupFide(fideId: string): Promise<FideLookup> {
   if (!/^\d{1,10}$/.test(fideId)) return { status: "notFound" };
   try {
     const res = await fetch(`${process.env.FIDE_PROFILE_URL ?? "https://ratings.fide.com/profile/"}${fideId}`, {
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(15000),
       headers: { "user-agent": "Mozilla/5.0 (compatible; tournamentManager)" },
       next: { revalidate: 3600 },
     });
