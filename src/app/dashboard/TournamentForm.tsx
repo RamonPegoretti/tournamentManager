@@ -86,6 +86,7 @@ export function TournamentForm({ action, initial }: Props) {
               </label>
             ))}
           </div>
+          {err("format")}
         </fieldset>
         <div className="grid gap-4 sm:grid-cols-2">
           {format !== "round_robin" && (

@@ -3,9 +3,14 @@ import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/auth";
 import { playerFlags } from "@/lib/flags";
 import { getOwnedTournament, listPlayers } from "@/lib/tournaments";
+import { db } from "@/db";
+import { games } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { setWithdrawn } from "../../round-actions";
 import { addPlayer, removePlayer } from "../../actions";
 import { AddPlayerForm } from "./AddPlayerForm";
 import { RemovePlayerButton } from "./RemovePlayerButton";
+import { WithdrawButton } from "./WithdrawButton";
 
 export default async function Players({
   params,
@@ -20,6 +25,8 @@ export default async function Players({
   const tour = await getOwnedTournament(id, user.id);
   const players = await listPlayers(tour.id);
   const flags = playerFlags(players);
+  const paired = await db.select({ w: games.whiteId, b: games.blackId }).from(games).where(eq(games.tournamentId, tour.id));
+  const hasGames = new Set(paired.flatMap((g) => [g.w, g.b]).filter(Boolean) as string[]);
   const [t, tp, ti] = await Promise.all([getTranslations("tournament"), getTranslations("player"), getTranslations("import")]);
   const rated = players.filter((p) => p.rating !== null);
   const avg = rated.length ? Math.round(rated.reduce((s, p) => s + p.rating!, 0) / rated.length) : null;
@@ -56,11 +63,12 @@ export default async function Players({
                 {players.map((p, i) => {
                   const name = [p.lastName, p.firstName].filter(Boolean).join(", ");
                   return (
-                    <tr key={p.id} className="border-b border-line/60 last:border-0">
+                    <tr key={p.id} className={`border-b border-line/60 last:border-0 ${p.status === "withdrawn" ? "opacity-60" : ""}`}>
                       <td className="px-4 py-2 text-muted tabular-nums">{i + 1}</td>
                       <td className="px-4 py-2">
                         <span className="font-medium">{name}</span>
                         {p.federation && <span className="ml-2 text-xs text-muted">{p.federation}</span>}
+                        {p.status === "withdrawn" && <span className="chip ml-2 border-bad/50 text-bad">{t("withdrawn")}</span>}
                         <div className="mt-0.5 flex flex-wrap gap-1">
                           {flags.get(p.id)?.map((f) => (
                             <span key={f} className="chip border-warn/50 text-warn">{t(`flags.${f}`)}</span>
@@ -71,7 +79,11 @@ export default async function Players({
                       <td className="hidden px-4 py-2 tabular-nums text-muted sm:table-cell">{p.fideId ?? "—"}</td>
                       <td className="hidden px-4 py-2 text-muted md:table-cell">{p.club ?? ""}</td>
                       <td className="px-4 py-2 text-right">
-                        <RemovePlayerButton name={name} action={removePlayer.bind(null, tour.id, p.id)} />
+                        {hasGames.has(p.id) ? (
+                          <WithdrawButton withdrawn={p.status === "withdrawn"} action={setWithdrawn.bind(null, tour.id, p.id, p.status !== "withdrawn")} />
+                        ) : (
+                          <RemovePlayerButton name={name} action={removePlayer.bind(null, tour.id, p.id)} />
+                        )}
                       </td>
                     </tr>
                   );

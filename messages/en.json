@@ -90,7 +90,9 @@
     "errors": {
       "name": "Give the tournament a name.",
       "rounds": "Rounds must be between 1 and 30.",
-      "dates": "The end date can't be before the start date."
+      "dates": "The end date can't be before the start date.",
+      "formatLocked": "The format can't change after the first round is paired.",
+      "roundsBelowPaired": "Some of those rounds are already paired."
     }
   },
   "tournament": {
@@ -110,7 +112,14 @@
       "duplicateName": "Possible duplicate",
       "noFide": "No FIDE ID"
     },
-    "player": "Player"
+    "player": "Player",
+    "rounds": "Rounds",
+    "standings": "Standings",
+    "publicPage": "Public page",
+    "withdraw": "Withdraw",
+    "reinstate": "Reinstate",
+    "withdrawn": "Withdrawn",
+    "no": "No."
   },
   "player": {
     "firstName": "First name",
@@ -157,5 +166,66 @@
     "cancel": "Cancel",
     "back": "Back",
     "optional": "optional"
+  },
+  "rounds": {
+    "title": "Round {n}",
+    "pairRound": "Pair round {n}",
+    "pairing": "Pairing…",
+    "unpair": "Undo pairing of round {n}",
+    "unpairConfirm": "Delete the pairings of round {n}? This only works while no results are entered.",
+    "none": "No rounds yet. When the player list is ready, pair round 1.",
+    "progress": "{done} of {total} results in",
+    "board": "Board {n}",
+    "whiteWon": "White won",
+    "draw": "Draw",
+    "blackWon": "Black won",
+    "more": "Other result",
+    "clear": "Clear result",
+    "pending": "Playing",
+    "forfeits": {
+      "white_forfeit": "White wins by forfeit",
+      "black_forfeit": "Black wins by forfeit",
+      "double_forfeit": "Both forfeit"
+    },
+    "bye": {
+      "pab": "Bye (1 point)",
+      "half_bye": "Half-point bye",
+      "zero_bye": "Bye (0 points)"
+    },
+    "allPaired": "All {n} rounds are paired.",
+    "finished": "Tournament finished.",
+    "errors": {
+      "formatNotReady": "Automatic pairing is only available for Swiss tournaments for now. Round robin, knockout and team formats are coming next.",
+      "allRoundsPaired": "All rounds are already paired. Add rounds in Settings to continue.",
+      "resultsMissing": "Enter every result of the current round before pairing the next one.",
+      "notEnoughPlayers": "You need at least 2 active players.",
+      "engine": "The pairing engine couldn't pair this round: {detail}",
+      "noRound": "There is no round to undo.",
+      "resultsEntered": "Results have been entered in this round, so it can't be undone. Clear them first.",
+      "badResult": "Unknown result.",
+      "badGame": "That game doesn't exist.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "standings": {
+    "title": "Standings",
+    "after": "After round {n}",
+    "none": "Standings appear once the first round is complete.",
+    "rank": "Rk",
+    "points": "Pts",
+    "player": "Player",
+    "rating": "Rating",
+    "live": "Live",
+    "updated": "Updates automatically"
+  },
+  "public": {
+    "pairings": "Pairings",
+    "standings": "Standings",
+    "round": "Round {n}",
+    "notStarted": "The tournament hasn't started yet. Pairings will appear here.",
+    "players": "Players",
+    "organizerView": "Organizer view",
+    "copyLink": "Copy link",
+    "copied": "Link copied"
   }
 }

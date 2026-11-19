@@ -8,6 +8,20 @@
       "when": 1794179923397,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795111772287,
+      "tag": "0001_rounds_and_games",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795111778946,
+      "tag": "0002_game_player_cascade",
+      "breakpoints": true
     }
   ]
 }

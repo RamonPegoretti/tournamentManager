@@ -90,7 +90,9 @@
     "errors": {
       "name": "Ponle un nombre al torneo.",
       "rounds": "Las rondas deben estar entre 1 y 30.",
-      "dates": "La fecha de fin no puede ser anterior a la de inicio."
+      "dates": "La fecha de fin no puede ser anterior a la de inicio.",
+      "formatLocked": "El sistema no puede cambiar después de emparejar la primera ronda.",
+      "roundsBelowPaired": "Algunas de esas rondas ya están emparejadas."
     }
   },
   "tournament": {
@@ -110,7 +112,14 @@
       "duplicateName": "Posible duplicado",
       "noFide": "Sin ID FIDE"
     },
-    "player": "Jugador"
+    "player": "Jugador",
+    "rounds": "Rondas",
+    "standings": "Clasificación",
+    "publicPage": "Página pública",
+    "withdraw": "Retirar",
+    "reinstate": "Readmitir",
+    "withdrawn": "Retirado",
+    "no": "N.º"
   },
   "player": {
     "firstName": "Nombre",
@@ -157,5 +166,66 @@
     "cancel": "Cancelar",
     "back": "Volver",
     "optional": "opcional"
+  },
+  "rounds": {
+    "title": "Ronda {n}",
+    "pairRound": "Emparejar ronda {n}",
+    "pairing": "Emparejando…",
+    "unpair": "Deshacer emparejamiento de la ronda {n}",
+    "unpairConfirm": "¿Borrar los emparejamientos de la ronda {n}? Solo funciona mientras no haya resultados.",
+    "none": "Aún no hay rondas. Cuando la lista de jugadores esté lista, empareja la ronda 1.",
+    "progress": "{done} de {total} resultados",
+    "board": "Tablero {n}",
+    "whiteWon": "Ganan blancas",
+    "draw": "Tablas",
+    "blackWon": "Ganan negras",
+    "more": "Otro resultado",
+    "clear": "Borrar resultado",
+    "pending": "Jugando",
+    "forfeits": {
+      "white_forfeit": "Ganan blancas por incomparecencia",
+      "black_forfeit": "Ganan negras por incomparecencia",
+      "double_forfeit": "Incomparecencia de ambos"
+    },
+    "bye": {
+      "pab": "Descanso (1 punto)",
+      "half_bye": "Descanso de medio punto",
+      "zero_bye": "Descanso (0 puntos)"
+    },
+    "allPaired": "Las {n} rondas están emparejadas.",
+    "finished": "Torneo finalizado.",
+    "errors": {
+      "formatNotReady": "De momento el emparejamiento automático solo está disponible para torneos suizos. Round robin, eliminatorio y por equipos llegarán pronto.",
+      "allRoundsPaired": "Todas las rondas ya están emparejadas. Añade rondas en Ajustes para continuar.",
+      "resultsMissing": "Introduce todos los resultados de la ronda actual antes de emparejar la siguiente.",
+      "notEnoughPlayers": "Necesitas al menos 2 jugadores activos.",
+      "engine": "El motor de emparejamiento no pudo emparejar la ronda: {detail}",
+      "noRound": "No hay ninguna ronda que deshacer.",
+      "resultsEntered": "Esta ronda ya tiene resultados, así que no se puede deshacer. Bórralos primero.",
+      "badResult": "Resultado desconocido.",
+      "badGame": "Esa partida no existe.",
+      "unknown": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "standings": {
+    "title": "Clasificación",
+    "after": "Tras la ronda {n}",
+    "none": "La clasificación aparece cuando termina la primera ronda.",
+    "rank": "Pos",
+    "points": "Pts",
+    "player": "Jugador",
+    "rating": "Elo",
+    "live": "En directo",
+    "updated": "Se actualiza sola"
+  },
+  "public": {
+    "pairings": "Emparejamientos",
+    "standings": "Clasificación",
+    "round": "Ronda {n}",
+    "notStarted": "El torneo aún no ha empezado. Los emparejamientos aparecerán aquí.",
+    "players": "Jugadores",
+    "organizerView": "Vista del organizador",
+    "copyLink": "Copiar enlace",
+    "copied": "Enlace copiado"
   }
 }

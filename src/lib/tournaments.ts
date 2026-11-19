@@ -2,7 +2,8 @@ import "server-only";
 import { and, asc, count, desc, eq, sql } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { players, tournaments } from "@/db/schema";
+import { games, players, rounds, tournaments, type Game, type Player } from "@/db/schema";
+import type { GameLite, PlayerLite } from "./chess-types";
 
 export function slugify(name: string): string {
   const base = name
@@ -52,4 +53,50 @@ export async function listPlayers(tournamentId: string) {
     .from(players)
     .where(eq(players.tournamentId, tournamentId))
     .orderBy(sql`${players.rating} desc nulls last`, asc(players.lastName), asc(players.firstName));
+}
+
+/** Everything needed to show pairings and standings. */
+export async function loadEventData(tournamentId: string) {
+  const [ps, gs, rs] = await Promise.all([
+    db.select().from(players).where(eq(players.tournamentId, tournamentId)),
+    db.select().from(games).where(eq(games.tournamentId, tournamentId)).orderBy(asc(games.round), asc(games.board)),
+    db.select().from(rounds).where(eq(rounds.tournamentId, tournamentId)).orderBy(asc(rounds.number)),
+  ]);
+  const finishedRounds = rs.filter((r) => r.status === "finished").map((r) => r.number);
+  // Standings count rounds up to the last one in an unbroken run of finished rounds.
+  let roundsDone = 0;
+  while (finishedRounds.includes(roundsDone + 1)) roundsDone++;
+  return {
+    players: ps,
+    games: gs,
+    rounds: rs,
+    roundsDone,
+    currentRound: rs.length ? rs[rs.length - 1].number : 0,
+    playerLites: ps.map(toPlayerLite),
+    gameLites: gs.map(toGameLite),
+  };
+}
+
+export function toPlayerLite(p: Player): PlayerLite {
+  return {
+    id: p.id,
+    firstName: p.firstName,
+    lastName: p.lastName,
+    rating: p.rating,
+    fideId: p.fideId,
+    federation: p.federation,
+    birthYear: p.birthYear,
+    startRank: p.startRank,
+    status: p.status,
+  };
+}
+
+export function toGameLite(g: Game): GameLite {
+  return { round: g.round, board: g.board, kind: g.kind, whiteId: g.whiteId, blackId: g.blackId, result: g.result };
+}
+
+export async function getTournamentBySlug(slug: string) {
+  const [t] = await db.select().from(tournaments).where(eq(tournaments.slug, slug));
+  if (!t) notFound();
+  return t;
 }
