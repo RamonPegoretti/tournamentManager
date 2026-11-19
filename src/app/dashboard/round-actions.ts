@@ -26,6 +26,7 @@ export async function pairNextRound(tournamentId: string): Promise<ActionResult>
   if (data.currentRound > 0 && data.rounds[data.rounds.length - 1].status !== "finished") return { error: "resultsMissing" };
   const active = data.players.filter((p) => p.status === "active");
   if (active.length < 2) return { error: "notEnoughPlayers" };
+  if (data.currentRound === 0 && active.some((p) => !p.approved)) return { error: "notApproved" };
 
   // Pairing numbers: before round 1 everyone is ranked by rating (unrated last), then name.
   // Later entries keep existing numbers and are appended at the end.
@@ -69,7 +70,8 @@ export async function pairNextRound(tournamentId: string): Promise<ActionResult>
     );
     // A round made only of byes is complete straight away.
     if (pairs.every((p) => p.kind !== "game")) await tx.update(rounds).set({ status: "finished" }).where(eq(rounds.id, round.id));
-    if (t.status !== "running") await tx.update(tournaments).set({ status: "running" }).where(eq(tournaments.id, t.id));
+    if (t.status !== "running" || t.registrationOpen)
+      await tx.update(tournaments).set({ status: "running", registrationOpen: false }).where(eq(tournaments.id, t.id));
   });
   revalidateEvent(t.id, t.slug);
   return { ok: true };

@@ -2,9 +2,10 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import type { Player } from "@/db/schema";
 import type { FormState } from "../../actions";
 
-export function AddPlayerForm({ action }: { action: (s: FormState, f: FormData) => Promise<FormState> }) {
+export function AddPlayerForm({ action, player }: { action: (s: FormState, f: FormData) => Promise<FormState>; player?: Player }) {
   const t = useTranslations("player");
   const [state, formAction, pending] = useActionState(action, undefined);
   const ref = useRef<HTMLFormElement>(null);
@@ -18,14 +19,21 @@ export function AddPlayerForm({ action }: { action: (s: FormState, f: FormData) 
   const field = (name: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}, hint?: string) => (
     <div>
       <label htmlFor={name} className="field-label">{t(name)}</label>
-      <input id={name} name={name} className="input" {...props} />
+      <input
+        id={name}
+        name={name}
+        className="input"
+        defaultValue={player ? String(player[name as keyof Player] ?? "") : undefined}
+        {...props}
+      />
       {hint && <p className="hint">{hint}</p>}
       {err(name)}
     </div>
   );
   return (
     <form ref={ref} action={formAction} className="card space-y-3 p-5">
-      <h2 className="font-semibold">{t("add")}</h2>
+      <h2 className="font-semibold">{player ? t("edit") : t("add")}</h2>
+      {err("form")}
       <div className="grid grid-cols-2 gap-3">
         {field("firstName", { autoComplete: "off" })}
         {field("lastName", { required: true, autoComplete: "off" })}
@@ -40,7 +48,7 @@ export function AddPlayerForm({ action }: { action: (s: FormState, f: FormData) 
       </div>
       {field("club")}
       {field("email", { type: "email" })}
-      <button disabled={pending} className="btn-primary w-full">{t("add")}</button>
+      <button disabled={pending} className="btn-primary w-full">{player ? t("save") : t("add")}</button>
     </form>
   );
 }

@@ -5,6 +5,7 @@ import {
   integer,
   date,
   timestamp,
+  boolean,
   pgEnum,
   index,
   unique,
@@ -50,6 +51,8 @@ export const tournaments = pgTable(
     // Ordered list of tiebreak codes, see src/lib/tiebreaks.ts
     tiebreaks: text("tiebreaks").array().notNull().default([]),
     status: statusEnum("status").notNull().default("draft"),
+    // Public self-signup page accepts entries while true.
+    registrationOpen: boolean("registration_open").notNull().default(false),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -76,6 +79,19 @@ export const players = pgTable(
     status: playerStatusEnum("status").notNull().default("active"),
     // Pairing number, fixed when the first round is paired.
     startRank: integer("start_rank"),
+    // "organizer" (added or imported) or "self" (public signup page).
+    source: text("source").notNull().default("organizer"),
+    // Self-registered entries wait for the organizer to approve the list.
+    approved: boolean("approved").notNull().default(true),
+    // Result of the last FIDE lookup: ok | notFound | unverified, null when never checked.
+    fideCheck: text("fide_check"),
+    fideName: text("fide_name"),
+    fideRating: integer("fide_rating"),
+    // Secret for the "fix your registration" link.
+    fixToken: text("fix_token").unique(),
+    warningNote: text("warning_note"),
+    warnedAt: timestamp("warned_at", { withTimezone: true }),
+    fixedAt: timestamp("fixed_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { games, players, rounds, tournaments } from "@/db/schema";
 import { requireUser } from "@/lib/auth";
+import { fideColumns } from "@/lib/fide-lookup";
 import { parsePlayersFile } from "@/lib/players-import";
 import { getOwnedTournament, slugify } from "@/lib/tournaments";
 import { fieldErrors, playerFromForm, tournamentFromForm } from "@/lib/validation";
@@ -49,9 +50,25 @@ export async function addPlayer(tournamentId: string, _: FormState, form: FormDa
   await getOwnedTournament(tournamentId, user.id);
   const parsed = playerFromForm(form);
   if (!parsed.success) return { errors: fieldErrors(parsed.error) };
-  await db.insert(players).values({ ...parsed.data, tournamentId });
+  const fide = await fideColumns(parsed.data.fideId);
+  // An empty rating with a known FIDE ID takes the FIDE rating.
+  const rating = parsed.data.rating ?? (fide.fideCheck === "ok" ? fide.fideRating : null);
+  await db.insert(players).values({ ...parsed.data, ...fide, rating, tournamentId });
   revalidatePath(`/dashboard/t/${tournamentId}`);
   return { ok: true };
+}
+
+export async function updatePlayer(tournamentId: string, playerId: string, _: FormState, form: FormData): Promise<FormState> {
+  const user = await requireUser();
+  await getOwnedTournament(tournamentId, user.id);
+  const parsed = playerFromForm(form);
+  if (!parsed.success) return { errors: fieldErrors(parsed.error) };
+  const [current] = await db.select().from(players).where(and(eq(players.id, playerId), eq(players.tournamentId, tournamentId)));
+  if (!current) return { errors: { form: "notFound" } };
+  const fide = parsed.data.fideId === current.fideId ? {} : await fideColumns(parsed.data.fideId);
+  await db.update(players).set({ ...parsed.data, ...fide }).where(eq(players.id, playerId));
+  revalidatePath(`/dashboard/t/${tournamentId}`, "layout");
+  redirect(`/dashboard/t/${tournamentId}`);
 }
 
 export async function removePlayer(tournamentId: string, playerId: string) {
