@@ -90,7 +90,9 @@
     "errors": {
       "name": "Dai un nome al torneo.",
       "rounds": "I turni devono essere tra 1 e 30.",
-      "dates": "La data di fine non può precedere quella di inizio."
+      "dates": "La data di fine non può precedere quella di inizio.",
+      "formatLocked": "La formula non può cambiare dopo l'abbinamento del primo turno.",
+      "roundsBelowPaired": "Alcuni di quei turni sono già abbinati."
     }
   },
   "tournament": {
@@ -110,7 +112,14 @@
       "duplicateName": "Possibile duplicato",
       "noFide": "Nessun ID FIDE"
     },
-    "player": "Giocatore"
+    "player": "Giocatore",
+    "rounds": "Turni",
+    "standings": "Classifica",
+    "publicPage": "Pagina pubblica",
+    "withdraw": "Ritira",
+    "reinstate": "Reintegra",
+    "withdrawn": "Ritirato",
+    "no": "N."
   },
   "player": {
     "firstName": "Nome",
@@ -157,5 +166,66 @@
     "cancel": "Annulla",
     "back": "Indietro",
     "optional": "facoltativo"
+  },
+  "rounds": {
+    "title": "Turno {n}",
+    "pairRound": "Abbina turno {n}",
+    "pairing": "Abbinamento…",
+    "unpair": "Annulla abbinamento del turno {n}",
+    "unpairConfirm": "Eliminare gli abbinamenti del turno {n}? Funziona solo finché non ci sono risultati inseriti.",
+    "none": "Ancora nessun turno. Quando l'elenco giocatori è pronto, abbina il turno 1.",
+    "progress": "{done} risultati su {total}",
+    "board": "Scacchiera {n}",
+    "whiteWon": "Vince il Bianco",
+    "draw": "Patta",
+    "blackWon": "Vince il Nero",
+    "more": "Altro risultato",
+    "clear": "Cancella risultato",
+    "pending": "In corso",
+    "forfeits": {
+      "white_forfeit": "Vince il Bianco a forfait",
+      "black_forfeit": "Vince il Nero a forfait",
+      "double_forfeit": "Forfait di entrambi"
+    },
+    "bye": {
+      "pab": "Bye (1 punto)",
+      "half_bye": "Bye da mezzo punto",
+      "zero_bye": "Bye (0 punti)"
+    },
+    "allPaired": "Tutti i {n} turni sono abbinati.",
+    "finished": "Torneo concluso.",
+    "errors": {
+      "formatNotReady": "Per ora l'abbinamento automatico è disponibile solo per i tornei svizzeri. All'italiana, eliminazione diretta e squadre arriveranno presto.",
+      "allRoundsPaired": "Tutti i turni sono già abbinati. Aggiungi turni nelle Impostazioni per continuare.",
+      "resultsMissing": "Inserisci tutti i risultati del turno in corso prima di abbinare il successivo.",
+      "notEnoughPlayers": "Servono almeno 2 giocatori attivi.",
+      "engine": "Il motore di abbinamento non è riuscito ad abbinare il turno: {detail}",
+      "noRound": "Non c'è nessun turno da annullare.",
+      "resultsEntered": "In questo turno ci sono già risultati, quindi non si può annullare. Cancellali prima.",
+      "badResult": "Risultato sconosciuto.",
+      "badGame": "Questa partita non esiste.",
+      "unknown": "Qualcosa è andato storto. Riprova."
+    }
+  },
+  "standings": {
+    "title": "Classifica",
+    "after": "Dopo il turno {n}",
+    "none": "La classifica appare quando il primo turno è completo.",
+    "rank": "Pos",
+    "points": "Punti",
+    "player": "Giocatore",
+    "rating": "Elo",
+    "live": "In diretta",
+    "updated": "Si aggiorna da sola"
+  },
+  "public": {
+    "pairings": "Abbinamenti",
+    "standings": "Classifica",
+    "round": "Turno {n}",
+    "notStarted": "Il torneo non è ancora iniziato. Gli abbinamenti appariranno qui.",
+    "players": "Giocatori",
+    "organizerView": "Vista organizzatore",
+    "copyLink": "Copia link",
+    "copied": "Link copiato"
   }
 }

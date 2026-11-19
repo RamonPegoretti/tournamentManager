@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { StatusChip } from "@/components/StatusChip";
 import { requireUser } from "@/lib/auth";
@@ -17,10 +18,15 @@ export default async function TournamentLayout({ children, params }: { children:
         <span className="text-sm text-muted">
           {[tf(tour.format), tour.location, tour.timeControl].filter(Boolean).join(" · ")}
         </span>
+        <Link href={`/t/${tour.slug}`} target="_blank" className="ml-auto text-sm text-accent hover:underline">
+          {t("publicPage")} ↗
+        </Link>
       </div>
       <Tabs
         tabs={[
           { href: `/dashboard/t/${id}`, label: t("players"), match: ["", "/import"] },
+          { href: `/dashboard/t/${id}/rounds`, label: t("rounds"), match: ["/rounds"] },
+          { href: `/dashboard/t/${id}/standings`, label: t("standings"), match: ["/standings"] },
           { href: `/dashboard/t/${id}/settings`, label: t("settings"), match: ["/settings"] },
         ]}
         base={`/dashboard/t/${id}`}

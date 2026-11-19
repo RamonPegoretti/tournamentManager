@@ -7,6 +7,7 @@ import {
   timestamp,
   pgEnum,
   index,
+  unique,
 } from "drizzle-orm/pg-core";
 import { user } from "./auth-schema";
 
@@ -73,12 +74,68 @@ export const players = pgTable(
     club: text("club"),
     email: text("email"),
     status: playerStatusEnum("status").notNull().default("active"),
+    // Pairing number, fixed when the first round is paired.
+    startRank: integer("start_rank"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
   },
   (t) => [index("players_tournament_idx").on(t.tournamentId)],
 );
+
+export const roundStatusEnum = pgEnum("round_status", ["paired", "finished"]);
+
+export const gameKindEnum = pgEnum("game_kind", ["game", "pab", "half_bye", "zero_bye"]);
+
+export const gameResultEnum = pgEnum("game_result", [
+  "white",
+  "black",
+  "draw",
+  "white_forfeit",
+  "black_forfeit",
+  "double_forfeit",
+]);
+
+export const rounds = pgTable(
+  "rounds",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tournamentId: uuid("tournament_id")
+      .notNull()
+      .references(() => tournaments.id, { onDelete: "cascade" }),
+    number: integer("number").notNull(),
+    status: roundStatusEnum("status").notNull().default("paired"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [unique("rounds_tournament_number").on(t.tournamentId, t.number)],
+);
+
+export const games = pgTable(
+  "games",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tournamentId: uuid("tournament_id")
+      .notNull()
+      .references(() => tournaments.id, { onDelete: "cascade" }),
+    roundId: uuid("round_id")
+      .notNull()
+      .references(() => rounds.id, { onDelete: "cascade" }),
+    round: integer("round").notNull(),
+    board: integer("board").notNull(),
+    kind: gameKindEnum("kind").notNull().default("game"),
+    whiteId: uuid("white_id")
+      .notNull()
+      .references(() => players.id, { onDelete: "cascade" }),
+    // null for byes
+    blackId: uuid("black_id").references(() => players.id, { onDelete: "cascade" }),
+    result: gameResultEnum("result"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("games_tournament_round_idx").on(t.tournamentId, t.round)],
+);
+
+export type Round = typeof rounds.$inferSelect;
+export type Game = typeof games.$inferSelect;
 
 export type Tournament = typeof tournaments.$inferSelect;
 export type Player = typeof players.$inferSelect;
