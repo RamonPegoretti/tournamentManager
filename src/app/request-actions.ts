@@ -22,6 +22,7 @@ export async function submitRequest(slug: string, gameId: string, _: RequestStat
   const proposed = String(form.get("result") ?? "") as GameResult;
   if (!RESULTS.includes(proposed)) return { error: "chooseResult" };
   if (proposed === g.result) return { error: "sameResult" };
+  if (tour.format === "knockout" && proposed === "draw") return { error: "knockoutDraw" };
   const message = String(form.get("message") ?? "").trim().slice(0, 1000) || null;
   const [open] = await db
     .select({ id: resultRequests.id })

@@ -53,11 +53,29 @@ export const tournaments = pgTable(
     status: statusEnum("status").notNull().default("draft"),
     // Public self-signup page accepts entries while true.
     registrationOpen: boolean("registration_open").notNull().default(false),
+    // Team events: players per team in each match, and how teams are paired.
+    boardsPerTeam: integer("boards_per_team").notNull().default(4),
+    teamSystem: text("team_system").notNull().default("swiss"), // swiss | round_robin
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
   },
   (t) => [index("tournaments_owner_idx").on(t.ownerId)],
+);
+
+export const teams = pgTable(
+  "teams",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tournamentId: uuid("tournament_id")
+      .notNull()
+      .references(() => tournaments.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    // Seed, fixed when round 1 is paired.
+    startRank: integer("start_rank"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [unique("teams_tournament_name").on(t.tournamentId, t.name)],
 );
 
 export const players = pgTable(
@@ -79,6 +97,9 @@ export const players = pgTable(
     status: playerStatusEnum("status").notNull().default("active"),
     // Pairing number, fixed when the first round is paired.
     startRank: integer("start_rank"),
+    teamId: uuid("team_id").references(() => teams.id, { onDelete: "set null" }),
+    // Board order inside the team (1 = top board), fixed when round 1 is paired.
+    teamBoard: integer("team_board"),
     // "organizer" (added or imported) or "self" (public signup page).
     source: text("source").notNull().default("organizer"),
     // Self-registered entries wait for the organizer to approve the list.
@@ -126,6 +147,28 @@ export const rounds = pgTable(
   (t) => [unique("rounds_tournament_number").on(t.tournamentId, t.number)],
 );
 
+/** A team match in a round; its board games point to it. */
+export const teamMatches = pgTable(
+  "team_matches",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tournamentId: uuid("tournament_id")
+      .notNull()
+      .references(() => tournaments.id, { onDelete: "cascade" }),
+    roundId: uuid("round_id")
+      .notNull()
+      .references(() => rounds.id, { onDelete: "cascade" }),
+    round: integer("round").notNull(),
+    board: integer("board").notNull(),
+    whiteTeamId: uuid("white_team_id")
+      .notNull()
+      .references(() => teams.id, { onDelete: "cascade" }),
+    // null for a team bye
+    blackTeamId: uuid("black_team_id").references(() => teams.id, { onDelete: "cascade" }),
+  },
+  (t) => [index("team_matches_tournament_idx").on(t.tournamentId, t.round)],
+);
+
 export const games = pgTable(
   "games",
   {
@@ -138,6 +181,7 @@ export const games = pgTable(
       .references(() => rounds.id, { onDelete: "cascade" }),
     round: integer("round").notNull(),
     board: integer("board").notNull(),
+    matchId: uuid("match_id").references(() => teamMatches.id, { onDelete: "cascade" }),
     kind: gameKindEnum("kind").notNull().default("game"),
     whiteId: uuid("white_id")
       .notNull()
@@ -186,3 +230,6 @@ export const resultRequests = pgTable(
 );
 
 export type ResultRequest = typeof resultRequests.$inferSelect;
+
+export type Team = typeof teams.$inferSelect;
+export type TeamMatch = typeof teamMatches.$inferSelect;

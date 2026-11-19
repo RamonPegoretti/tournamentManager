@@ -7,6 +7,8 @@ import { getOwnedTournament, loadEventData } from "@/lib/tournaments";
 import { BoardCard } from "./BoardCard";
 import { RoundControls } from "./RoundControls";
 import { RequestsPanel } from "./RequestsPanel";
+import { roundMatches } from "@/lib/team-view";
+import type { Game } from "@/db/schema";
 
 export default async function Rounds({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ round?: string }> }) {
   const { id } = await params;
@@ -36,6 +38,19 @@ export default async function Rounds({ params, searchParams }: { params: Promise
     return { name: displayName(p), rating: p.rating, points: fmtPoints(pointsBefore.get(pid) ?? 0), rank: p.startRank };
   };
   const gamesOnly = roundGames.filter((g) => g.kind === "game");
+  const card = (g: Game, i?: number) => (
+    <BoardCard
+      key={g.id}
+      tournamentId={tour.id}
+      gameId={g.id}
+      board={i === undefined ? g.board : i + 1}
+      kind={g.kind}
+      result={g.result}
+      white={side(g.whiteId)}
+      black={g.blackId ? side(g.blackId) : null}
+      allowDraw={tour.format !== "knockout"}
+    />
+  );
   const done = gamesOnly.filter((g) => g.result).length;
 
   return (
@@ -75,22 +90,21 @@ export default async function Rounds({ params, searchParams }: { params: Promise
         <RoundControls tournamentId={tour.id} nextRound={nextRound} canPair={canPair && selected === data.currentRound} canUnpair={canUnpair} lastRound={last?.number ?? 0} />
       </div>
 
-      {roundGames.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {roundGames.map((g) => (
-            <BoardCard
-              key={g.id}
-              tournamentId={tour.id}
-              gameId={g.id}
-              board={g.board}
-              kind={g.kind}
-              result={g.result}
-              white={side(g.whiteId)}
-              black={g.blackId ? side(g.blackId) : null}
-            />
-          ))}
-        </div>
-      )}
+      {tour.format === "team"
+        ? roundMatches(data, selected, tour.boardsPerTeam).map((m) => (
+            <section key={m.match.id} className="space-y-3">
+              <h3 className="flex flex-wrap items-baseline gap-3 border-b border-line pb-2">
+                <span className="text-xs text-muted">{t("match", { n: m.match.board })}</span>
+                <span className="font-semibold">{m.home}</span>
+                <span className={`tabular-nums font-bold ${m.done ? "text-ok" : "text-accent"}`}>
+                  {m.away ? `${fmtPoints(m.score[0])} – ${fmtPoints(m.score[1])}` : t("teamBye")}
+                </span>
+                {m.away && <span className="font-semibold">{m.away}</span>}
+              </h3>
+              {m.games.length > 0 && <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{m.games.map((g, i) => card(g, i))}</div>}
+            </section>
+          ))
+        : roundGames.length > 0 && <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{roundGames.map((g) => card(g))}</div>}
     </div>
   );
 }

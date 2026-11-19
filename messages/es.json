@@ -94,8 +94,14 @@
       "rounds": "Las rondas deben estar entre 1 y 30.",
       "dates": "La fecha de fin no puede ser anterior a la de inicio.",
       "formatLocked": "El sistema no puede cambiar después de emparejar la primera ronda.",
-      "roundsBelowPaired": "Algunas de esas rondas ya están emparejadas."
-    }
+      "roundsBelowPaired": "Algunas de esas rondas ya están emparejadas.",
+      "boardsPerTeam": "Elige entre 1 y 12 tableros."
+    },
+    "boardsPerTeam": "Tableros por equipo",
+    "teamSystem": "Emparejamiento de equipos",
+    "roundsKnockout": "El número de rondas depende del número de jugadores.",
+    "roundsRoundRobin": "Todos contra todos: el número de rondas depende de los participantes.",
+    "teamTiebreaks": "Los equipos se ordenan por puntos de match (2 victoria, 1 empate), luego puntos de partida, luego Buchholz."
   },
   "tournament": {
     "players": "Jugadores",
@@ -150,12 +156,15 @@
       "notFound": "Este jugador ya no existe."
     },
     "edit": "Editar jugador",
-    "save": "Guardar cambios"
+    "save": "Guardar cambios",
+    "team": "Equipo",
+    "teamHint": "Escribe un nombre nuevo para crear un equipo.",
+    "noTeam": "Sin equipo"
   },
   "import": {
     "title": "Importar jugadores",
     "body": "Sube un archivo CSV o pega filas copiadas de Excel o Google Sheets. La primera fila debe contener los encabezados de las columnas.",
-    "columns": "Columnas reconocidas: nombre (o nombre y apellido), ID FIDE, Elo, federación, año de nacimiento, club, correo. Los encabezados pueden estar en español, inglés o italiano.",
+    "columns": "Columnas reconocidas: nombre (o nombre y apellidos), ID FIDE, Elo, federación, año de nacimiento, club, email, equipo. Los encabezados pueden estar en inglés, italiano o español.",
     "file": "Archivo CSV",
     "paste": "O pega aquí",
     "preview": "Vista previa",
@@ -219,8 +228,16 @@
       "badResult": "Resultado desconocido.",
       "badGame": "Esa partida no existe.",
       "unknown": "Algo salió mal. Inténtalo de nuevo.",
-      "notApproved": "Algunas inscripciones esperan aprobación. Aprueba primero la lista de jugadores."
-    }
+      "notApproved": "Algunas inscripciones esperan aprobación. Aprueba primero la lista de jugadores.",
+      "lateEntry": "Los jugadores o equipos añadidos tras la ronda 1 no pueden entrar en un todos contra todos. Elimínalos o retíralos.",
+      "knockoutDraw": "Una partida eliminatoria necesita un ganador. Indica quién pasa (tras el desempate si hace falta).",
+      "noTeam": "Algunos jugadores no tienen equipo. Asigna primero un equipo a cada jugador.",
+      "notEnoughTeams": "Necesitas al menos dos equipos con jugadores."
+    },
+    "whiteAdvances": "Pasa Blancas",
+    "blackAdvances": "Pasa Negras",
+    "match": "Encuentro {n}",
+    "teamBye": "Descanso"
   },
   "standings": {
     "title": "Clasificación",
@@ -231,7 +248,19 @@
     "player": "Jugador",
     "rating": "Elo",
     "live": "En directo",
-    "updated": "Se actualiza sola"
+    "updated": "Se actualiza sola",
+    "team": "Equipo",
+    "mp": "PM",
+    "gp": "PP",
+    "matchPoints": "Puntos de match",
+    "gamePoints": "Puntos de partida",
+    "buchholz": "Buchholz (puntos de match de los rivales)",
+    "final": "Final",
+    "semifinal": "Semifinales",
+    "quarterfinal": "Cuartos de final",
+    "roundN": "Ronda {n}",
+    "winner": "Ganador",
+    "bye": "Descanso"
   },
   "public": {
     "pairings": "Emparejamientos",
@@ -362,7 +391,8 @@
     "errors": {
       "badGame": "Esta partida no se puede reclamar.",
       "chooseResult": "Elige el resultado correcto.",
-      "sameResult": "Ese ya es el resultado."
+      "sameResult": "Ese ya es el resultado.",
+      "knockoutDraw": "Una partida eliminatoria no puede acabar en tablas."
     }
   }
 }

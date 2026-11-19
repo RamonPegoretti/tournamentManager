@@ -4,7 +4,7 @@ import { and, eq, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { games, players, rounds, tournaments } from "@/db/schema";
+import { games, players, rounds, teams, tournaments } from "@/db/schema";
 import { requireUser } from "@/lib/auth";
 import { fideColumns } from "@/lib/fide-lookup";
 import { parsePlayersFile } from "@/lib/players-import";
@@ -30,6 +30,8 @@ export async function updateTournament(id: string, _: FormState, form: FormData)
   const parsed = tournamentFromForm(form);
   if (!parsed.success) return { errors: fieldErrors(parsed.error) };
   const paired = await db.select({ n: rounds.number }).from(rounds).where(eq(rounds.tournamentId, id));
+  // Round robin and knockout set their own number of rounds when round 1 is paired.
+  if (paired.length && parsed.data.rounds === null) parsed.data.rounds = current.rounds;
   if (paired.length) {
     if (parsed.data.format !== current.format) return { errors: { format: "formatLocked" } };
     const max = Math.max(...paired.map((r) => r.n));
@@ -45,6 +47,15 @@ export async function updateTournament(id: string, _: FormState, form: FormData)
   return { ok: true };
 }
 
+/** Team ids by name, creating the teams that don't exist yet. */
+async function teamIds(tournamentId: string, names: (string | null)[]): Promise<Map<string, string>> {
+  const wanted = [...new Set(names.filter((n): n is string => !!n))];
+  if (!wanted.length) return new Map();
+  await db.insert(teams).values(wanted.map((name) => ({ tournamentId, name }))).onConflictDoNothing();
+  const rows = await db.select({ id: teams.id, name: teams.name }).from(teams).where(eq(teams.tournamentId, tournamentId));
+  return new Map(rows.map((r) => [r.name, r.id]));
+}
+
 export async function addPlayer(tournamentId: string, _: FormState, form: FormData): Promise<FormState> {
   const user = await requireUser();
   await getOwnedTournament(tournamentId, user.id);
@@ -53,7 +64,9 @@ export async function addPlayer(tournamentId: string, _: FormState, form: FormDa
   const fide = await fideColumns(parsed.data.fideId);
   // An empty rating with a known FIDE ID takes the FIDE rating.
   const rating = parsed.data.rating ?? (fide.fideCheck === "ok" ? fide.fideRating : null);
-  await db.insert(players).values({ ...parsed.data, ...fide, rating, tournamentId });
+  const { team, ...fields } = parsed.data;
+  const teamId = team ? (await teamIds(tournamentId, [team])).get(team)! : null;
+  await db.insert(players).values({ ...fields, ...fide, rating, teamId, tournamentId });
   revalidatePath(`/dashboard/t/${tournamentId}`);
   return { ok: true };
 }
@@ -66,7 +79,9 @@ export async function updatePlayer(tournamentId: string, playerId: string, _: Fo
   const [current] = await db.select().from(players).where(and(eq(players.id, playerId), eq(players.tournamentId, tournamentId)));
   if (!current) return { errors: { form: "notFound" } };
   const fide = parsed.data.fideId === current.fideId ? {} : await fideColumns(parsed.data.fideId);
-  await db.update(players).set({ ...parsed.data, ...fide }).where(eq(players.id, playerId));
+  const { team, ...fields } = parsed.data;
+  const teamId = team ? (await teamIds(tournamentId, [team])).get(team)! : null;
+  await db.update(players).set({ ...fields, ...fide, teamId }).where(eq(players.id, playerId));
   revalidatePath(`/dashboard/t/${tournamentId}`, "layout");
   redirect(`/dashboard/t/${tournamentId}`);
 }
@@ -92,7 +107,9 @@ export async function importPlayers(tournamentId: string, _: FormState, form: Fo
   // Parse again on the server: never trust the client preview.
   const { rows, missingColumns } = parsePlayersFile(text);
   if (missingColumns.length) return { errors: { form: "missingName" } };
-  const valid = rows.flatMap((r) => (r.player ? [{ ...r.player, tournamentId }] : []));
+  const ok = rows.flatMap((r) => (r.player ? [r.player] : []));
+  const ids = await teamIds(tournamentId, ok.map((p) => p.team));
+  const valid = ok.map(({ team, ...p }) => ({ ...p, teamId: team ? ids.get(team)! : null, tournamentId }));
   if (valid.length) await db.insert(players).values(valid);
   revalidatePath(`/dashboard/t/${tournamentId}`);
   redirect(`/dashboard/t/${tournamentId}?imported=${valid.length}`);

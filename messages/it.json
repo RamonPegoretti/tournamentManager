@@ -94,8 +94,14 @@
       "rounds": "I turni devono essere tra 1 e 30.",
       "dates": "La data di fine non può precedere quella di inizio.",
       "formatLocked": "La formula non può cambiare dopo l'abbinamento del primo turno.",
-      "roundsBelowPaired": "Alcuni di quei turni sono già abbinati."
-    }
+      "roundsBelowPaired": "Alcuni di quei turni sono già abbinati.",
+      "boardsPerTeam": "Scegli tra 1 e 12 scacchiere."
+    },
+    "boardsPerTeam": "Scacchiere per squadra",
+    "teamSystem": "Abbinamento squadre",
+    "roundsKnockout": "Il numero di turni dipende dal numero di giocatori.",
+    "roundsRoundRobin": "Tutti contro tutti: il numero di turni dipende dai partecipanti.",
+    "teamTiebreaks": "Le squadre sono ordinate per punti match (2 vittoria, 1 pareggio), poi punti partita, poi Buchholz."
   },
   "tournament": {
     "players": "Giocatori",
@@ -150,12 +156,15 @@
       "notFound": "Questo giocatore non esiste più."
     },
     "edit": "Modifica giocatore",
-    "save": "Salva modifiche"
+    "save": "Salva modifiche",
+    "team": "Squadra",
+    "teamHint": "Scrivi un nuovo nome per creare una squadra.",
+    "noTeam": "Senza squadra"
   },
   "import": {
     "title": "Importa giocatori",
     "body": "Carica un file CSV o incolla righe copiate da Excel o Google Fogli. La prima riga deve contenere le intestazioni delle colonne.",
-    "columns": "Colonne riconosciute: nome (o nome e cognome), ID FIDE, Elo, federazione, anno di nascita, circolo, email. Le intestazioni possono essere in italiano, inglese o spagnolo.",
+    "columns": "Colonne riconosciute: nome (o nome e cognome), ID FIDE, Elo, federazione, anno di nascita, circolo, email, squadra. Le intestazioni possono essere in inglese, italiano o spagnolo.",
     "file": "File CSV",
     "paste": "Oppure incolla qui",
     "preview": "Anteprima",
@@ -219,8 +228,16 @@
       "badResult": "Risultato sconosciuto.",
       "badGame": "Questa partita non esiste.",
       "unknown": "Qualcosa è andato storto. Riprova.",
-      "notApproved": "Alcune iscrizioni attendono ancora l'approvazione. Approva prima la lista giocatori."
-    }
+      "notApproved": "Alcune iscrizioni attendono ancora l'approvazione. Approva prima la lista giocatori.",
+      "lateEntry": "Giocatori o squadre aggiunti dopo il primo turno non possono entrare in un girone all'italiana. Rimuovili o ritirali.",
+      "knockoutDraw": "Una partita a eliminazione diretta richiede un vincitore. Indica chi passa il turno (dopo eventuali spareggi).",
+      "noTeam": "Alcuni giocatori non hanno una squadra. Assegna prima una squadra a ogni giocatore.",
+      "notEnoughTeams": "Servono almeno due squadre con giocatori."
+    },
+    "whiteAdvances": "Passa il Bianco",
+    "blackAdvances": "Passa il Nero",
+    "match": "Incontro {n}",
+    "teamBye": "Riposo"
   },
   "standings": {
     "title": "Classifica",
@@ -231,7 +248,19 @@
     "player": "Giocatore",
     "rating": "Elo",
     "live": "In diretta",
-    "updated": "Si aggiorna da sola"
+    "updated": "Si aggiorna da sola",
+    "team": "Squadra",
+    "mp": "PM",
+    "gp": "PP",
+    "matchPoints": "Punti match",
+    "gamePoints": "Punti partita",
+    "buchholz": "Buchholz (punti match degli avversari)",
+    "final": "Finale",
+    "semifinal": "Semifinali",
+    "quarterfinal": "Quarti di finale",
+    "roundN": "Turno {n}",
+    "winner": "Vincitore",
+    "bye": "Riposo"
   },
   "public": {
     "pairings": "Abbinamenti",
@@ -362,7 +391,8 @@
     "errors": {
       "badGame": "Questa partita non può essere segnalata.",
       "chooseResult": "Scegli il risultato corretto.",
-      "sameResult": "Il risultato è già questo."
+      "sameResult": "Il risultato è già questo.",
+      "knockoutDraw": "Una partita a eliminazione diretta non può finire patta."
     }
   }
 }

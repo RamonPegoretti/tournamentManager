@@ -29,6 +29,8 @@ export const tournamentInput = z
     rounds: z.coerce.number().int("rounds").min(1, "rounds").max(30, "rounds").nullable(),
     timeControl: optText,
     tiebreaks: z.array(z.string()).transform(normalizeTiebreaks),
+    boardsPerTeam: z.coerce.number().int("boardsPerTeam").min(1, "boardsPerTeam").max(12, "boardsPerTeam"),
+    teamSystem: z.enum(["swiss", "round_robin"]),
   })
   .refine((v) => !v.startDate || !v.endDate || v.endDate >= v.startDate, { message: "dates", path: ["endDate"] });
 
@@ -37,16 +39,20 @@ export type TournamentInput = z.infer<typeof tournamentInput>;
 export function tournamentFromForm(form: FormData) {
   const rounds = String(form.get("rounds") ?? "").trim();
   const format = String(form.get("format") ?? "swiss");
+  const teamSystem = form.get("teamSystem") === "round_robin" ? "round_robin" : "swiss";
+  // Round robin and knockout rounds follow from the number of players or teams.
+  const autoRounds = format === "round_robin" || format === "knockout" || (format === "team" && teamSystem === "round_robin");
   return tournamentInput.safeParse({
     name: form.get("name") ?? "",
     location: form.get("location") ?? "",
     startDate: form.get("startDate") ?? "",
     endDate: form.get("endDate") ?? "",
     format,
-    // Round robin rounds follow from the player count; keep it empty there.
-    rounds: rounds === "" || format === "round_robin" ? null : rounds,
+    rounds: rounds === "" || autoRounds ? null : rounds,
     timeControl: form.get("timeControl") ?? "",
-    tiebreaks: format === "knockout" ? [] : form.getAll("tiebreaks").map(String),
+    tiebreaks: format === "knockout" || format === "team" ? [] : form.getAll("tiebreaks").map(String),
+    boardsPerTeam: String(form.get("boardsPerTeam") ?? "").trim() || 4,
+    teamSystem,
   });
 }
 
@@ -74,6 +80,7 @@ export const playerInput = z.object({
     .refine((v) => v === "" || (/^\d{4}$/.test(v) && +v >= 1900 && +v <= new Date().getFullYear()), "birthYear")
     .transform((v) => (v ? Number(v) : null)),
   club: z.string().trim().max(120).transform((v) => v || null),
+  team: z.string().trim().max(80).transform((v) => v || null),
   email: z
     .string()
     .trim()
@@ -91,6 +98,7 @@ export function playerFromForm(form: FormData) {
     federation: get("federation"),
     birthYear: get("birthYear"),
     club: get("club"),
+    team: get("team"),
     email: get("email"),
   });
 }
