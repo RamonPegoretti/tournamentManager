@@ -17,7 +17,7 @@ export async function lookupFide(fideId: string): Promise<FideLookup> {
     const profile = parseFideProfile(fideId, await res.text());
     return profile ? { status: "ok", profile } : { status: "notFound" };
   } catch (e) {
-    return { status: "unverified", reason: e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 120) : "error" };
+    return { status: "unverified", reason: e instanceof Error ? `${e.name}: ${e.message} ${String((e as { cause?: unknown }).cause ?? "")}`.slice(0, 200) : "error" };
   }
 }
 
