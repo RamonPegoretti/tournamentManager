@@ -113,12 +113,17 @@ export const registrationInput = z
     email: z.string().trim().regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "email").max(200, "email"),
     ratingType: z.enum(["fide", "unrated"], { message: "ratingType" }),
     fideId: z.string().trim(),
+    // Only used when FIDE can't be reached: the rating the player says they have.
+    declaredRating: playerInput.shape.rating,
     federation: playerInput.shape.federation,
     birthYear: playerInput.shape.birthYear,
     club: playerInput.shape.club,
   })
   .refine((v) => v.ratingType === "unrated" || /^\d{1,10}$/.test(v.fideId), { message: "fideId", path: ["fideId"] })
-  .transform(({ ratingType, fideId, ...rest }) => ({ ...rest, fideId: ratingType === "fide" ? fideId : null }));
+  .transform(({ ratingType, fideId, declaredRating, ...rest }) => ({
+    fields: { ...rest, fideId: ratingType === "fide" ? fideId : null },
+    declaredRating: ratingType === "fide" ? declaredRating : null,
+  }));
 
 export function registrationFromForm(form: FormData) {
   const get = (k: string) => String(form.get(k) ?? "");
@@ -128,6 +133,7 @@ export function registrationFromForm(form: FormData) {
     email: get("email"),
     ratingType: get("ratingType") || undefined,
     fideId: get("fideId"),
+    declaredRating: get("declaredRating"),
     federation: get("federation"),
     birthYear: get("birthYear"),
     club: get("club"),

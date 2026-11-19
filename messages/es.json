@@ -321,6 +321,8 @@
       "locked": "Tu inscripción ya no se puede cambiar."
     },
     "emailSubject": "Estás inscrito en {name}",
-    "emailBody": "Hola {name}:\n\nGracias por inscribirte en {tournament}. El organizador revisará la lista de jugadores antes del inicio.\n\nVer o cambiar tu inscripción: {link}\n"
+    "emailBody": "Hola {name}:\n\nGracias por inscribirte en {tournament}. El organizador revisará la lista de jugadores antes del inicio.\n\nVer o cambiar tu inscripción: {link}\n",
+    "declaredRating": "Tu Elo FIDE actual",
+    "declaredRatingHint": "Déjalo vacío si en FIDE figuras sin Elo. El organizador lo comprobará."
   }
 }

@@ -135,6 +135,14 @@ export function RegistrationForm({
             </p>
           )}
           {lookup && lookup.status !== "ok" && <p className="mt-2 text-sm text-warn">{t(`fideStatus.${lookup.status}`)}</p>}
+          {lookup?.status === "unverified" && (
+            <div className="mt-3">
+              <label htmlFor="declaredRating" className="field-label">{t("declaredRating")}</label>
+              <input id="declaredRating" name="declaredRating" type="number" min={1000} max={3000} className="input" />
+              <p className="hint">{t("declaredRatingHint")}</p>
+              {err("declaredRating")}
+            </div>
+          )}
         </div>
       )}
       {ratingType === "unrated" && <input type="hidden" name="fideId" value="" />}

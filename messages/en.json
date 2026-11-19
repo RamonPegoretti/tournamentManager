@@ -321,6 +321,8 @@
       "locked": "Your registration can't be changed any more."
     },
     "emailSubject": "You're registered for {name}",
-    "emailBody": "Hi {name},\n\nThanks for registering for {tournament}. The organizer will review the player list before the start.\n\nView or change your registration: {link}\n"
+    "emailBody": "Hi {name},\n\nThanks for registering for {tournament}. The organizer will review the player list before the start.\n\nView or change your registration: {link}\n",
+    "declaredRating": "Your current FIDE rating",
+    "declaredRatingHint": "Leave empty if FIDE lists you as unrated. The organizer will check it."
   }
 }

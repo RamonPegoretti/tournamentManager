@@ -321,6 +321,8 @@
       "locked": "La tua iscrizione non può più essere modificata."
     },
     "emailSubject": "Sei iscritto a {name}",
-    "emailBody": "Ciao {name},\n\ngrazie per esserti iscritto a {tournament}. L'organizzatore controllerà la lista giocatori prima dell'inizio.\n\nVedi o modifica la tua iscrizione: {link}\n"
+    "emailBody": "Ciao {name},\n\ngrazie per esserti iscritto a {tournament}. L'organizzatore controllerà la lista giocatori prima dell'inizio.\n\nVedi o modifica la tua iscrizione: {link}\n",
+    "declaredRating": "Il tuo Elo FIDE attuale",
+    "declaredRatingHint": "Lascia vuoto se su FIDE risulti senza Elo. L'organizzatore lo verificherà."
   }
 }

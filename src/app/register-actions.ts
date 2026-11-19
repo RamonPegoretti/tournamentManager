@@ -21,7 +21,7 @@ export async function selfRegister(slug: string, _: RegisterState, form: FormDat
   if (!tour.registrationOpen) return { errors: { form: "closed" } };
   const parsed = registrationFromForm(form);
   if (!parsed.success) return { errors: fieldErrors(parsed.error) };
-  const v = parsed.data;
+  const { fields: v, declaredRating } = parsed.data;
 
   const dup = await db
     .select({ id: players.id })
@@ -41,7 +41,8 @@ export async function selfRegister(slug: string, _: RegisterState, form: FormDat
     ...v,
     ...fide,
     tournamentId: tour.id,
-    rating: fide.fideRating,
+    // When FIDE couldn't be reached the declared rating is used, and the entry stays flagged.
+    rating: fide.fideCheck === "ok" ? fide.fideRating : fide.fideCheck === "unverified" ? declaredRating : null,
     source: "self",
     approved: false,
     fixToken: token,
@@ -78,13 +79,13 @@ export async function updateRegistration(token: string, _: RegisterState, form: 
   if (!reg.editable) return { errors: { form: "locked" } };
   const parsed = registrationFromForm(form);
   if (!parsed.success) return { errors: fieldErrors(parsed.error) };
-  const v = parsed.data;
+  const { fields: v, declaredRating } = parsed.data;
   const fide = v.fideId === reg.player.fideId && reg.player.fideCheck === "ok"
     ? { fideCheck: reg.player.fideCheck, fideName: reg.player.fideName, fideRating: reg.player.fideRating }
     : await fideColumns(v.fideId);
   await db
     .update(players)
-    .set({ ...v, ...fide, rating: v.fideId ? fide.fideRating : null, approved: false, warningNote: null, fixedAt: new Date() })
+    .set({ ...v, ...fide, rating: fide.fideCheck === "ok" ? fide.fideRating : fide.fideCheck === "unverified" ? declaredRating : null, approved: false, warningNote: null, fixedAt: new Date() })
     .where(eq(players.id, reg.player.id));
   revalidatePath(`/dashboard/t/${reg.tournament.id}`);
   revalidatePath(`/t/${reg.tournament.slug}`);

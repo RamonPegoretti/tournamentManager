@@ -54,6 +54,6 @@ describe("registrationFromForm", () => {
   });
   it("drops the FIDE ID for unrated players", () => {
     const r = registrationFromForm(form({ firstName: "A", lastName: "B", email: "a@b.it", ratingType: "unrated", fideId: "123" }));
-    expect(r.data?.fideId).toBeNull();
+    expect(r.data?.fields.fideId).toBeNull();
   });
 });
