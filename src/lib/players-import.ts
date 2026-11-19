@@ -9,6 +9,7 @@ export type ImportedPlayer = {
   birthYear: number | null;
   club: string | null;
   email: string | null;
+  team: string | null;
 };
 
 export type ImportRow = {
@@ -28,6 +29,7 @@ const ALIASES: Record<keyof ImportedPlayer | "name", string[]> = {
   birthYear: ["birthyear", "born", "yob", "year", "annonascita", "anno", "añonacimiento", "anonacimiento"],
   club: ["club", "circolo", "società", "societa"],
   email: ["email", "mail", "e-mail", "correo"],
+  team: ["team", "squadra", "equipo", "squad"],
 };
 
 function normHeader(h: string): string {
@@ -119,7 +121,7 @@ export function parsePlayersFile(text: string): { rows: ImportRow[]; missingColu
       errors,
       player: errors.length
         ? null
-        : { firstName, lastName, fideId, rating, federation, birthYear, club: get("club"), email },
+        : { firstName, lastName, fideId, rating, federation, birthYear, club: get("club"), email, team: get("team") },
     };
   });
 

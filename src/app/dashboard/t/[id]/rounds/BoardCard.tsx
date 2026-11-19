@@ -15,6 +15,7 @@ export function BoardCard({
   result,
   white,
   black,
+  allowDraw = true,
 }: {
   tournamentId: string;
   gameId: string;
@@ -23,6 +24,7 @@ export function BoardCard({
   result: GameResult | null;
   white: Side;
   black: Side | null;
+  allowDraw?: boolean;
 }) {
   const t = useTranslations("rounds");
   const [pending, start] = useTransition();
@@ -71,10 +73,10 @@ export function BoardCard({
       </div>
       <PlayerRow side={white} color="white" />
       <PlayerRow side={black} color="black" />
-      <div className="mt-3 grid grid-cols-3 gap-2">
-        {btn("white", t("whiteWon"))}
-        {btn("draw", t("draw"))}
-        {btn("black", t("blackWon"))}
+      <div className={`mt-3 grid gap-2 ${allowDraw ? "grid-cols-3" : "grid-cols-2"}`}>
+        {btn("white", allowDraw ? t("whiteWon") : t("whiteAdvances"))}
+        {allowDraw && btn("draw", t("draw"))}
+        {btn("black", allowDraw ? t("blackWon") : t("blackAdvances"))}
       </div>
       <label className="mt-2 block">
         <span className="sr-only">{t("more")}</span>

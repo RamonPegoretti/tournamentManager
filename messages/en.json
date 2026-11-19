@@ -94,8 +94,14 @@
       "rounds": "Rounds must be between 1 and 30.",
       "dates": "The end date can't be before the start date.",
       "formatLocked": "The format can't change after the first round is paired.",
-      "roundsBelowPaired": "Some of those rounds are already paired."
-    }
+      "roundsBelowPaired": "Some of those rounds are already paired.",
+      "boardsPerTeam": "Choose between 1 and 12 boards."
+    },
+    "boardsPerTeam": "Boards per team",
+    "teamSystem": "Team pairing",
+    "roundsKnockout": "The number of rounds follows from the number of players.",
+    "roundsRoundRobin": "Everyone plays everyone: the number of rounds follows from the field.",
+    "teamTiebreaks": "Teams are ranked by match points (2 win, 1 draw), then game points, then Buchholz."
   },
   "tournament": {
     "players": "Players",
@@ -150,12 +156,15 @@
       "notFound": "This player no longer exists."
     },
     "edit": "Edit player",
-    "save": "Save changes"
+    "save": "Save changes",
+    "team": "Team",
+    "teamHint": "Type a new name to create a team.",
+    "noTeam": "No team"
   },
   "import": {
     "title": "Import players",
     "body": "Upload a CSV file or paste rows copied from Excel or Google Sheets. The first row must be the column headers.",
-    "columns": "Recognised columns: name (or first name and last name), FIDE ID, rating, federation, birth year, club, email. Headers can be in English, Italian or Spanish.",
+    "columns": "Recognised columns: name (or first name and last name), FIDE ID, rating, federation, birth year, club, email, team. Headers can be in English, Italian or Spanish.",
     "file": "CSV file",
     "paste": "Or paste here",
     "preview": "Preview",
@@ -219,8 +228,16 @@
       "badResult": "Unknown result.",
       "badGame": "That game doesn't exist.",
       "unknown": "Something went wrong. Please try again.",
-      "notApproved": "Some registrations are still waiting for approval. Approve the player list first."
-    }
+      "notApproved": "Some registrations are still waiting for approval. Approve the player list first.",
+      "lateEntry": "Players or teams added after round 1 can't join a round robin. Remove them or withdraw them.",
+      "knockoutDraw": "A knockout game needs a winner. Enter who advances (after tiebreak games if needed).",
+      "noTeam": "Some players have no team. Give every player a team first.",
+      "notEnoughTeams": "You need at least two teams with players."
+    },
+    "whiteAdvances": "White advances",
+    "blackAdvances": "Black advances",
+    "match": "Match {n}",
+    "teamBye": "Bye"
   },
   "standings": {
     "title": "Standings",
@@ -231,7 +248,19 @@
     "player": "Player",
     "rating": "Rating",
     "live": "Live",
-    "updated": "Updates automatically"
+    "updated": "Updates automatically",
+    "team": "Team",
+    "mp": "MP",
+    "gp": "GP",
+    "matchPoints": "Match points",
+    "gamePoints": "Game points",
+    "buchholz": "Buchholz (opponents' match points)",
+    "final": "Final",
+    "semifinal": "Semifinals",
+    "quarterfinal": "Quarterfinals",
+    "roundN": "Round {n}",
+    "winner": "Winner",
+    "bye": "Bye"
   },
   "public": {
     "pairings": "Pairings",
@@ -362,7 +391,8 @@
     "errors": {
       "badGame": "This game can't be reported.",
       "chooseResult": "Choose the correct result.",
-      "sameResult": "That's already the result."
+      "sameResult": "That's already the result.",
+      "knockoutDraw": "A knockout game can't end in a draw."
     }
   }
 }

@@ -5,7 +5,17 @@ import { useTranslations } from "next-intl";
 import type { Player } from "@/db/schema";
 import type { FormState } from "../../actions";
 
-export function AddPlayerForm({ action, player }: { action: (s: FormState, f: FormData) => Promise<FormState>; player?: Player }) {
+export function AddPlayerForm({
+  action,
+  player,
+  teams,
+  teamName,
+}: {
+  action: (s: FormState, f: FormData) => Promise<FormState>;
+  player?: Player;
+  teams?: string[];
+  teamName?: string;
+}) {
   const t = useTranslations("player");
   const [state, formAction, pending] = useActionState(action, undefined);
   const ref = useRef<HTMLFormElement>(null);
@@ -46,6 +56,18 @@ export function AddPlayerForm({ action, player }: { action: (s: FormState, f: Fo
         {field("federation", { maxLength: 3, placeholder: "ITA", className: "input uppercase" })}
         {field("birthYear", { type: "number", min: 1900, max: new Date().getFullYear() })}
       </div>
+      {teams && (
+        <div>
+          <label htmlFor="team" className="field-label">{t("team")}</label>
+          <input id="team" name="team" list="team-names" required defaultValue={teamName ?? ""} className="input" autoComplete="off" />
+          <datalist id="team-names">
+            {teams.map((n) => (
+              <option key={n} value={n} />
+            ))}
+          </datalist>
+          <p className="hint">{t("teamHint")}</p>
+        </div>
+      )}
       {field("club")}
       {field("email", { type: "email" })}
       <button disabled={pending} className="btn-primary w-full">{player ? t("save") : t("add")}</button>

@@ -2,7 +2,7 @@ import "server-only";
 import { and, asc, count, desc, eq, sql } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { db } from "@/db";
-import { games, players, rounds, tournaments, type Game, type Player } from "@/db/schema";
+import { games, players, rounds, teamMatches, teams, tournaments, type Game, type Player } from "@/db/schema";
 import type { GameLite, PlayerLite } from "./chess-types";
 
 export function slugify(name: string): string {
@@ -57,10 +57,12 @@ export async function listPlayers(tournamentId: string) {
 
 /** Everything needed to show pairings and standings. */
 export async function loadEventData(tournamentId: string) {
-  const [ps, gs, rs] = await Promise.all([
+  const [ps, gs, rs, ts, ms] = await Promise.all([
     db.select().from(players).where(eq(players.tournamentId, tournamentId)),
     db.select().from(games).where(eq(games.tournamentId, tournamentId)).orderBy(asc(games.round), asc(games.board)),
     db.select().from(rounds).where(eq(rounds.tournamentId, tournamentId)).orderBy(asc(rounds.number)),
+    db.select().from(teams).where(eq(teams.tournamentId, tournamentId)).orderBy(asc(teams.startRank), asc(teams.name)),
+    db.select().from(teamMatches).where(eq(teamMatches.tournamentId, tournamentId)).orderBy(asc(teamMatches.round), asc(teamMatches.board)),
   ]);
   const finishedRounds = rs.filter((r) => r.status === "finished").map((r) => r.number);
   // Standings count rounds up to the last one in an unbroken run of finished rounds.
@@ -70,6 +72,8 @@ export async function loadEventData(tournamentId: string) {
     players: ps,
     games: gs,
     rounds: rs,
+    teams: ts,
+    matches: ms,
     roundsDone,
     currentRound: rs.length ? rs[rs.length - 1].number : 0,
     playerLites: ps.map(toPlayerLite),

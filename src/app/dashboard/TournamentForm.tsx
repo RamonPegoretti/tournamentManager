@@ -19,6 +19,8 @@ export function TournamentForm({ action, initial }: Props) {
   const tb = useTranslations("tiebreak");
   const [state, formAction, pending] = useActionState(action, undefined);
   const [format, setFormat] = useState<Format>(initial?.format ?? "swiss");
+  const [teamSystem, setTeamSystem] = useState(initial?.teamSystem ?? "swiss");
+  const fixedRounds = format === "round_robin" || format === "knockout" || (format === "team" && teamSystem === "round_robin");
   const [selected, setSelected] = useState<TiebreakCode[]>(
     (initial?.tiebreaks as TiebreakCode[] | undefined) ?? DEFAULT_TIEBREAKS.swiss,
   );
@@ -89,7 +91,29 @@ export function TournamentForm({ action, initial }: Props) {
           {err("format")}
         </fieldset>
         <div className="grid gap-4 sm:grid-cols-2">
-          {format !== "round_robin" && (
+          {format === "team" && (
+            <>
+              <div>
+                <label htmlFor="boardsPerTeam" className="field-label">{t("boardsPerTeam")}</label>
+                <input id="boardsPerTeam" name="boardsPerTeam" type="number" min={1} max={12} defaultValue={initial?.boardsPerTeam ?? 4} className="input" />
+                {err("boardsPerTeam")}
+              </div>
+              <fieldset>
+                <legend className="field-label">{t("teamSystem")}</legend>
+                <div className="grid grid-cols-2 gap-2">
+                  {(["swiss", "round_robin"] as const).map((v) => (
+                    <label key={v} className={`cursor-pointer rounded-lg border px-3 py-2 text-sm ${teamSystem === v ? "border-accent bg-accent/10" : "border-line bg-surface-2"}`}>
+                      <input type="radio" name="teamSystem" value={v} checked={teamSystem === v} onChange={() => setTeamSystem(v)} className="sr-only" />
+                      {tf(v)}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </>
+          )}
+          {fixedRounds ? (
+            <p className="hint self-center">{t(format === "knockout" ? "roundsKnockout" : "roundsRoundRobin")}</p>
+          ) : (
             <div>
               <label htmlFor="rounds" className="field-label">{t("rounds")}</label>
               <input id="rounds" name="rounds" type="number" min={1} max={30} defaultValue={initial?.rounds ?? (format === "swiss" ? 7 : "")} className="input" />
@@ -107,14 +131,14 @@ export function TournamentForm({ action, initial }: Props) {
       <section className="card p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="field-label mb-0">{t("tiebreaks")}</h2>
-          {format !== "knockout" && (
+          {format !== "knockout" && format !== "team" && (
             <button type="button" className="text-sm text-accent hover:underline" onClick={() => { setSelected(DEFAULT_TIEBREAKS[format]); setTouched(false); }}>
               {t("resetDefaults")}
             </button>
           )}
         </div>
-        {format === "knockout" ? (
-          <p className="hint">{t("noTiebreaks")}</p>
+        {format === "knockout" || format === "team" ? (
+          <p className="hint">{t(format === "team" ? "teamTiebreaks" : "noTiebreaks")}</p>
         ) : (
           <>
             <p className="hint mb-3">{t("tiebreaksHint")}</p>

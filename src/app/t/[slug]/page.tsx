@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { AutoRefresh } from "@/components/AutoRefresh";
 import { Podium } from "@/components/Podium";
+import { Bracket } from "@/components/Bracket";
+import { TeamStandingsTable } from "@/components/TeamStandingsTable";
+import { roundMatches } from "@/lib/team-view";
 import { StandingsTable } from "@/components/StandingsTable";
 import { StatusChip } from "@/components/StatusChip";
 import { gamePoints, resultLabel } from "@/lib/chess-types";
@@ -35,6 +38,39 @@ export default async function PublicTournament({ params, searchParams }: Props) 
     pointsBefore.set(g.whiteId, (pointsBefore.get(g.whiteId) ?? 0) + w);
     if (g.blackId) pointsBefore.set(g.blackId, (pointsBefore.get(g.blackId) ?? 0) + b);
   }
+
+  const gameItem = (g: (typeof data.games)[number]) => {
+                  const w = byId.get(g.whiteId)!;
+                  const b = g.blackId ? byId.get(g.blackId)! : null;
+                  const res = resultLabel(g.kind, g.result);
+                  return (
+                    <li key={g.id} className={`card grid grid-cols-[2rem_1fr_auto] items-center gap-3 p-3 ${g.result || g.kind !== "game" ? "" : "border-accent/40"}`}>
+                      <span className="text-center text-sm text-muted tabular-nums">{g.board}</span>
+                      <div className="min-w-0 text-sm">
+                        <p className="flex items-center gap-2 truncate">
+                          <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full bg-ink" />
+                          <span className="truncate font-medium">{displayName(w)}</span>
+                          <span className="text-xs text-muted tabular-nums">{fmtPoints(pointsBefore.get(w.id) ?? 0)}</span>
+                        </p>
+                        {b ? (
+                          <p className="mt-1 flex items-center gap-2 truncate">
+                            <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full border border-muted" />
+                            <span className="truncate font-medium">{displayName(b)}</span>
+                            <span className="text-xs text-muted tabular-nums">{fmtPoints(pointsBefore.get(b.id) ?? 0)}</span>
+                          </p>
+                        ) : (
+                          <p className="mt-1 text-xs text-muted">{tr(`bye.${g.kind}`)}</p>
+                        )}
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`text-sm font-semibold tabular-nums ${res ? "text-ok" : "text-accent"}`}>{res || tr("pending")}</span>
+                        {g.kind === "game" && (
+                          <Link href={`/t/${slug}/report/${g.id}`} className="text-xs text-muted hover:text-warn">{t("report")}</Link>
+                        )}
+                      </div>
+                    </li>
+                  );
+                };
 
   const tabLink = (v: "pairings" | "standings", label: string) => (
     <Link
@@ -109,47 +145,29 @@ export default async function PublicTournament({ params, searchParams }: Props) 
               ))}
             </div>
             <h2 className="font-semibold">{t("round", { n: selected })}</h2>
-            <ul className="space-y-2">
-              {data.games
-                .filter((g) => g.round === selected)
-                .map((g) => {
-                  const w = byId.get(g.whiteId)!;
-                  const b = g.blackId ? byId.get(g.blackId)! : null;
-                  const res = resultLabel(g.kind, g.result);
-                  return (
-                    <li key={g.id} className={`card grid grid-cols-[2rem_1fr_auto] items-center gap-3 p-3 ${g.result || g.kind !== "game" ? "" : "border-accent/40"}`}>
-                      <span className="text-center text-sm text-muted tabular-nums">{g.board}</span>
-                      <div className="min-w-0 text-sm">
-                        <p className="flex items-center gap-2 truncate">
-                          <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full bg-ink" />
-                          <span className="truncate font-medium">{displayName(w)}</span>
-                          <span className="text-xs text-muted tabular-nums">{fmtPoints(pointsBefore.get(w.id) ?? 0)}</span>
-                        </p>
-                        {b ? (
-                          <p className="mt-1 flex items-center gap-2 truncate">
-                            <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full border border-muted" />
-                            <span className="truncate font-medium">{displayName(b)}</span>
-                            <span className="text-xs text-muted tabular-nums">{fmtPoints(pointsBefore.get(b.id) ?? 0)}</span>
-                          </p>
-                        ) : (
-                          <p className="mt-1 text-xs text-muted">{tr(`bye.${g.kind}`)}</p>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className={`text-sm font-semibold tabular-nums ${res ? "text-ok" : "text-accent"}`}>{res || tr("pending")}</span>
-                        {g.kind === "game" && (
-                          <Link href={`/t/${slug}/report/${g.id}`} className="text-xs text-muted hover:text-warn">{t("report")}</Link>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
-            </ul>
+            {tour.format === "team" ? (
+              roundMatches(data, selected, tour.boardsPerTeam).map((m) => (
+                <div key={m.match.id} className="space-y-2">
+                  <p className="flex flex-wrap items-baseline gap-2 pt-2 text-sm">
+                    <span className="font-semibold">{m.home}</span>
+                    <span className={`font-bold tabular-nums ${m.done ? "text-ok" : "text-accent"}`}>
+                      {m.away ? `${fmtPoints(m.score[0])} – ${fmtPoints(m.score[1])}` : tr("teamBye")}
+                    </span>
+                    {m.away && <span className="font-semibold">{m.away}</span>}
+                  </p>
+                  <ul className="space-y-2">{m.games.map((g, i) => gameItem({ ...g, board: i + 1 }))}</ul>
+                </div>
+              ))
+            ) : (
+              <ul className="space-y-2">{data.games.filter((g) => g.round === selected).map((g) => gameItem(g))}</ul>
+            )}
           </section>
         ))}
 
       {tab === "standings" &&
-        (data.roundsDone === 0 ? (
+        (tour.format === "knockout" && data.currentRound > 0 ? (
+          <Bracket data={data} totalRounds={tour.rounds ?? data.currentRound} />
+        ) : data.roundsDone === 0 ? (
           <div className="card p-8 text-center text-muted">{ts("none")}</div>
         ) : (
           <StandingsSection tour={tour} data={data} afterLabel={ts("after", { n: data.roundsDone })} />
@@ -167,6 +185,13 @@ function StandingsSection({
   data: Awaited<ReturnType<typeof loadEventData>>;
   afterLabel: string;
 }) {
+  if (tour.format === "team")
+    return (
+      <section className="space-y-4">
+        <p className="text-sm text-muted">{afterLabel}</p>
+        <TeamStandingsTable data={data} boards={tour.boardsPerTeam} />
+      </section>
+    );
   const rows = computeStandings(data.playerLites, data.gameLites, tour.tiebreaks as TiebreakCode[], data.roundsDone);
   return (
     <section className="space-y-4">

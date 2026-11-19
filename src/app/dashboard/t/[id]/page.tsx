@@ -4,7 +4,7 @@ import { requireUser } from "@/lib/auth";
 import { playerFlags } from "@/lib/flags";
 import { getOwnedTournament, listPlayers } from "@/lib/tournaments";
 import { db } from "@/db";
-import { games } from "@/db/schema";
+import { games, teams } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { setWithdrawn } from "../../round-actions";
 import { addPlayer, removePlayer } from "../../actions";
@@ -30,6 +30,8 @@ export default async function Players({
   const tour = await getOwnedTournament(id, user.id);
   const players = await listPlayers(tour.id);
   const flags = playerFlags(players);
+  const teamList = tour.format === "team" ? await db.select().from(teams).where(eq(teams.tournamentId, tour.id)) : [];
+  const teamName = new Map(teamList.map((x) => [x.id, x.name]));
   const paired = await db.select({ w: games.whiteId, b: games.blackId }).from(games).where(eq(games.tournamentId, tour.id));
   const hasGames = new Set(paired.flatMap((g) => [g.w, g.b]).filter(Boolean) as string[]);
   const [t, tp, ti, tg] = await Promise.all([
@@ -121,6 +123,12 @@ export default async function Players({
                       <td className="px-4 py-2">
                         <span className="font-medium">{name}</span>
                         {p.federation && <span className="ml-2 text-xs text-muted">{p.federation}</span>}
+                        {tour.format === "team" &&
+                          (p.teamId ? (
+                            <span className="chip ml-2 border-accent/40 text-accent">{teamName.get(p.teamId)}</span>
+                          ) : (
+                            <span className="chip ml-2 border-bad/50 text-bad">{tp("noTeam")}</span>
+                          ))}
                         {p.status === "withdrawn" && <span className="chip ml-2 border-bad/50 text-bad">{t("withdrawn")}</span>}
                         {!p.approved && <span className="chip ml-2 border-warn/50 bg-warn/10 text-warn">{tg("new")}</span>}
                         {p.warningNote !== null && p.warnedAt && <span className="chip ml-2 border-warn/50 text-warn">{tg("warned")}</span>}
@@ -162,7 +170,7 @@ export default async function Players({
         )}
       </section>
       <aside>
-        <AddPlayerForm action={addPlayer.bind(null, tour.id)} />
+        <AddPlayerForm action={addPlayer.bind(null, tour.id)} teams={tour.format === "team" ? teamList.map((x) => x.name).sort() : undefined} />
       </aside>
     </div>
   );
