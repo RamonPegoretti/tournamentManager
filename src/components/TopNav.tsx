@@ -8,7 +8,7 @@ export async function TopNav() {
   const t = await getTranslations();
   const user = await getCurrentUser();
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-bg/90 backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-line bg-bg/90 backdrop-blur print:hidden">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span aria-hidden className="grid h-7 w-7 place-items-center rounded-md bg-accent text-accent-ink">♞</span>

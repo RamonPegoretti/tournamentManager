@@ -23,10 +23,13 @@ export function buildTrf(opts: {
   players: PlayerLite[];
   games: GameLite[];
   preByes: PreBye[];
+  /** Report mode: extra header lines, final ranks instead of pairing numbers, no engine extensions. */
+  header?: string[];
+  rankOf?: Map<string, number>;
 }): string {
   const { players, games, nextRound } = opts;
   const byId = new Map(players.map((p) => [p.id, p]));
-  const lines: string[] = [`012 ${opts.name.slice(0, 80)}`];
+  const lines: string[] = [`012 ${opts.name.slice(0, 80)}`, ...(opts.header ?? [])];
 
   const sorted = [...players].sort((a, b) => a.startRank! - b.startRank!);
   for (const p of sorted) {
@@ -65,7 +68,7 @@ export function buildTrf(opts: {
     }
     const pre = opts.preByes.find((b) => b.playerId === p.id);
     if (pre) cells.push(cell(0, "-", pre.kind === "half_bye" ? "H" : "Z"));
-    else if (p.status === "withdrawn") cells.push(cell(0, "-", "Z"));
+    else if (p.status === "withdrawn" && !opts.rankOf) cells.push(cell(0, "-", "Z"));
 
     const name = `${p.lastName}, ${p.firstName}`.replace(/,\s*$/, "");
     const line =
@@ -87,12 +90,14 @@ export function buildTrf(opts: {
       " " +
       fmtPoints(points) +
       " " +
-      pad(p.startRank!, 4) +
+      pad(opts.rankOf?.get(p.id) ?? p.startRank!, 4) +
       cells.join("");
     lines.push(line.trimEnd());
   }
-  lines.push(`XXR ${opts.totalRounds}`);
-  lines.push("XXC white1");
+  if (!opts.rankOf) {
+    lines.push(`XXR ${opts.totalRounds}`);
+    lines.push("XXC white1");
+  }
   return lines.join("\n") + "\n";
 }
 

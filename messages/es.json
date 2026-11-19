@@ -133,7 +133,8 @@
     "reinstate": "Readmitir",
     "withdrawn": "Retirado",
     "no": "N.º",
-    "edit": "Editar"
+    "edit": "Editar",
+    "export": "Exportar"
   },
   "player": {
     "firstName": "Nombre",
@@ -275,7 +276,8 @@
     "entries": "{count, plural, one {# inscrito} other {# inscritos}}",
     "pendingEntry": "pendiente",
     "unrated": "sin Elo",
-    "report": "Reclamar resultado"
+    "report": "Reclamar resultado",
+    "print": "Imprimir"
   },
   "registration": {
     "selfSignup": "Inscripción online",
@@ -394,5 +396,30 @@
       "sameResult": "Ese ya es el resultado.",
       "knockoutDraw": "Una partida eliminatoria no puede acabar en tablas."
     }
+  },
+  "print": {
+    "board": "Tb",
+    "white": "Blancas",
+    "black": "Negras",
+    "pts": "Pts",
+    "result": "Resultado",
+    "nothing": "Aún no hay nada que imprimir.",
+    "pairingsRound": "Emparejamientos, ronda {n}",
+    "print": "Imprimir / Guardar como PDF"
+  },
+  "export": {
+    "printTitle": "Imprimir o PDF",
+    "printPairings": "Emparejamientos de la ronda {n}",
+    "printStandings": "Clasificación actual",
+    "printHint": "Abre una página imprimible. Usa Imprimir → Guardar como PDF para obtener el PDF.",
+    "filesTitle": "Archivos",
+    "playersCsv": "Jugadores (CSV)",
+    "playersCsvHint": "Todos con Elo, ID FIDE, club, equipo y email.",
+    "pairingsCsv": "Emparejamientos y resultados (CSV)",
+    "pairingsCsvHint": "Todas las partidas de todas las rondas.",
+    "standingsCsv": "Clasificación (CSV)",
+    "standingsCsvHint": "Puestos, puntos y desempates tras la última ronda completa.",
+    "trf": "Informe FIDE (TRF)",
+    "trfHint": "Archivo TRF-16 de todas las rondas completas, para enviar a valoración."
   }
 }

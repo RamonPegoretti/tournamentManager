@@ -103,6 +103,11 @@ export default async function PublicTournament({ params, searchParams }: Props) 
         )}
       </header>
 
+      {data.currentRound > 0 && (
+        <p className="-mb-3 text-right">
+          <Link href={`/t/${slug}/print?view=${tab}&round=${selected}`} className="text-xs text-muted hover:text-ink">{t("print")} ↗</Link>
+        </p>
+      )}
       <nav className="flex gap-1 rounded-lg border border-line bg-surface p-1">
         {tabLink("pairings", t("pairings"))}
         {tabLink("standings", t("standings"))}
