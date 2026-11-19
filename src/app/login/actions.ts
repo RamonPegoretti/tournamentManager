@@ -37,7 +37,9 @@ export async function signIn(_: LoginState, form: FormData): Promise<LoginState>
     console.error(e);
     return { error: "unknown", values };
   }
-  redirect("/dashboard");
+  const next = String(form.get("next") ?? "");
+  // Only same-site paths, never "//host" or absolute URLs.
+  redirect(/^\/(?!\/)[\w\-/?=&%.]*$/.test(next) ? next : "/dashboard");
 }
 
 export async function signOut() {

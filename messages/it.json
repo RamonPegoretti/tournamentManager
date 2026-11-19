@@ -7,7 +7,8 @@
     "dashboard": "I miei tornei",
     "signIn": "Accedi",
     "signOut": "Esci",
-    "language": "Lingua"
+    "language": "Lingua",
+    "requests": "Le mie richieste"
   },
   "home": {
     "title": "Tornei di scacchi, gestiti con calma.",
@@ -28,7 +29,8 @@
       "credentials": "Email o password errate.",
       "exists": "Esiste già un account con questa email. Accedi.",
       "unknown": "Qualcosa è andato storto. Riprova."
-    }
+    },
+    "toContinue": "Accedi o crea un account per continuare."
   },
   "dashboard": {
     "title": "I miei tornei",
@@ -243,7 +245,8 @@
     "register": "Iscriviti al torneo",
     "entries": "{count, plural, one {# iscritto} other {# iscritti}}",
     "pendingEntry": "in attesa",
-    "unrated": "senza Elo"
+    "unrated": "senza Elo",
+    "report": "Segnala risultato"
   },
   "registration": {
     "selfSignup": "Iscrizione online",
@@ -324,5 +327,42 @@
     "emailBody": "Ciao {name},\n\ngrazie per esserti iscritto a {tournament}. L'organizzatore controllerà la lista giocatori prima dell'inizio.\n\nVedi o modifica la tua iscrizione: {link}\n",
     "declaredRating": "Il tuo Elo FIDE attuale",
     "declaredRatingHint": "Lascia vuoto se su FIDE risulti senza Elo. L'organizzatore lo verificherà."
+  },
+  "requests": {
+    "reportTitle": "Segnala un risultato sbagliato",
+    "reportHint": "Indica all'organizzatore il risultato corretto. Lo approverà o lo respingerà.",
+    "gameLine": "Turno {round} · Scacchiera {board}",
+    "currentResult": "Risultato attuale",
+    "noResult": "nessun risultato",
+    "correctResult": "Risultato corretto",
+    "message": "Messaggio per l'organizzatore",
+    "messagePlaceholder": "Facoltativo: cosa è successo?",
+    "send": "Invia richiesta",
+    "sent": "Richiesta inviata. Vedrai la risposta dell'organizzatore in Le mie richieste.",
+    "mine": "Le mie richieste",
+    "noneMine": "Non hai inviato richieste.",
+    "yourStatus": {
+      "pending": "Hai chiesto {result}. In attesa dell'organizzatore.",
+      "approved": "La tua richiesta di {result} è stata approvata.",
+      "denied": "La tua richiesta di {result} è stata respinta."
+    },
+    "status": {
+      "pending": "In attesa",
+      "approved": "Approvata",
+      "denied": "Respinta"
+    },
+    "waiting": "{count, plural, one {# richiesta di correzione ti aspetta} other {# richieste di correzione ti aspettano}}",
+    "changedSince": "risultato cambiato dopo la richiesta",
+    "from": "Da {name} ({email})",
+    "isPlayer": "gioca questa partita come {player}",
+    "approve": "Approva e applica",
+    "deny": "Respingi",
+    "responsePlaceholder": "Risposta facoltativa al giocatore",
+    "confirmDeny": "Respingi richiesta",
+    "errors": {
+      "badGame": "Questa partita non può essere segnalata.",
+      "chooseResult": "Scegli il risultato corretto.",
+      "sameResult": "Il risultato è già questo."
+    }
   }
 }

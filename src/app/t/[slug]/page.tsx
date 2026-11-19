@@ -135,7 +135,12 @@ export default async function PublicTournament({ params, searchParams }: Props) 
                           <p className="mt-1 text-xs text-muted">{tr(`bye.${g.kind}`)}</p>
                         )}
                       </div>
-                      <span className={`text-sm font-semibold tabular-nums ${res ? "text-ok" : "text-accent"}`}>{res || tr("pending")}</span>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`text-sm font-semibold tabular-nums ${res ? "text-ok" : "text-accent"}`}>{res || tr("pending")}</span>
+                        {g.kind === "game" && (
+                          <Link href={`/t/${slug}/report/${g.id}`} className="text-xs text-muted hover:text-warn">{t("report")}</Link>
+                        )}
+                      </div>
                     </li>
                   );
                 })}

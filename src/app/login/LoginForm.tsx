@@ -4,13 +4,14 @@ import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { signIn, type LoginState } from "./actions";
 
-export function LoginForm() {
+export function LoginForm({ next }: { next?: string }) {
   const t = useTranslations("login");
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [state, action, pending] = useActionState<LoginState, FormData>(signIn, undefined);
   const signup = mode === "signup";
   return (
     <form action={action} className="card space-y-4 p-6">
+      {next && <input type="hidden" name="next" value={next} />}
       <div className="grid grid-cols-2 rounded-lg border border-line bg-surface-2 p-1 text-sm">
         {(["signin", "signup"] as const).map((m) => (
           <button

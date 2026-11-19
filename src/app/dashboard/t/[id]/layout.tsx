@@ -3,6 +3,9 @@ import { getTranslations } from "next-intl/server";
 import { StatusChip } from "@/components/StatusChip";
 import { requireUser } from "@/lib/auth";
 import { getOwnedTournament } from "@/lib/tournaments";
+import { and, count, eq } from "drizzle-orm";
+import { db } from "@/db";
+import { resultRequests } from "@/db/schema";
 import { Tabs } from "./Tabs";
 
 export default async function TournamentLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
@@ -10,6 +13,10 @@ export default async function TournamentLayout({ children, params }: { children:
   const user = await requireUser();
   const tour = await getOwnedTournament(id, user.id);
   const [t, tf] = await Promise.all([getTranslations("tournament"), getTranslations("format")]);
+  const [{ pending }] = await db
+    .select({ pending: count() })
+    .from(resultRequests)
+    .where(and(eq(resultRequests.tournamentId, tour.id), eq(resultRequests.status, "pending")));
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -25,7 +32,7 @@ export default async function TournamentLayout({ children, params }: { children:
       <Tabs
         tabs={[
           { href: `/dashboard/t/${id}`, label: t("players"), match: ["", "/import"] },
-          { href: `/dashboard/t/${id}/rounds`, label: t("rounds"), match: ["/rounds"] },
+          { href: `/dashboard/t/${id}/rounds`, label: t("rounds"), match: ["/rounds"], badge: pending },
           { href: `/dashboard/t/${id}/standings`, label: t("standings"), match: ["/standings"] },
           { href: `/dashboard/t/${id}/settings`, label: t("settings"), match: ["/settings"] },
         ]}
