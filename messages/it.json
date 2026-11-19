@@ -110,7 +110,12 @@
     "flags": {
       "duplicateFide": "Stesso ID FIDE di un altro giocatore",
       "duplicateName": "Possibile duplicato",
-      "noFide": "Nessun ID FIDE"
+      "noFide": "Nessun ID FIDE",
+      "duplicateEmail": "Stessa email di un altro giocatore",
+      "fideNotFound": "ID FIDE non trovato",
+      "fideUnverified": "FIDE non raggiungibile, riprova",
+      "fideNameMismatch": "Nome diverso da FIDE",
+      "fideRatingDiff": "Elo diverso da FIDE"
     },
     "player": "Giocatore",
     "rounds": "Turni",
@@ -119,7 +124,8 @@
     "withdraw": "Ritira",
     "reinstate": "Reintegra",
     "withdrawn": "Ritirato",
-    "no": "N."
+    "no": "N.",
+    "edit": "Modifica"
   },
   "player": {
     "firstName": "Nome",
@@ -137,8 +143,12 @@
       "rating": "L'Elo deve essere tra 1000 e 3000, oppure vuoto se senza Elo.",
       "fideId": "Un ID FIDE contiene solo cifre.",
       "email": "Questa email non sembra corretta.",
-      "birthYear": "Inserisci un anno di nascita valido."
-    }
+      "birthYear": "Inserisci un anno di nascita valido.",
+      "firstName": "Inserisci un nome.",
+      "notFound": "Questo giocatore non esiste più."
+    },
+    "edit": "Modifica giocatore",
+    "save": "Salva modifiche"
   },
   "import": {
     "title": "Importa giocatori",
@@ -165,7 +175,9 @@
   "common": {
     "cancel": "Annulla",
     "back": "Indietro",
-    "optional": "facoltativo"
+    "optional": "facoltativo",
+    "copy": "Copia",
+    "copied": "Copiato"
   },
   "rounds": {
     "title": "Turno {n}",
@@ -204,7 +216,8 @@
       "resultsEntered": "In questo turno ci sono già risultati, quindi non si può annullare. Cancellali prima.",
       "badResult": "Risultato sconosciuto.",
       "badGame": "Questa partita non esiste.",
-      "unknown": "Qualcosa è andato storto. Riprova."
+      "unknown": "Qualcosa è andato storto. Riprova.",
+      "notApproved": "Alcune iscrizioni attendono ancora l'approvazione. Approva prima la lista giocatori."
     }
   },
   "standings": {
@@ -226,6 +239,90 @@
     "players": "Giocatori",
     "organizerView": "Vista organizzatore",
     "copyLink": "Copia link",
-    "copied": "Link copiato"
+    "copied": "Link copiato",
+    "register": "Iscriviti al torneo",
+    "entries": "{count, plural, one {# iscritto} other {# iscritti}}",
+    "pendingEntry": "in attesa",
+    "unrated": "senza Elo"
+  },
+  "registration": {
+    "selfSignup": "Iscrizione online",
+    "open": "aperta",
+    "closed": "chiusa",
+    "openHint": "I giocatori possono iscriversi dalla pagina pubblica. Condividi questo link:",
+    "closedHint": "Aprila per permettere ai giocatori di iscriversi dalla pagina pubblica.",
+    "openAction": "Apri iscrizioni",
+    "close": "Chiudi iscrizioni",
+    "fideHint": "{count, plural, one {# giocatore ha} other {# giocatori hanno}} un ID FIDE.",
+    "recheck": "Verifica ID FIDE",
+    "checking": "Verifica…",
+    "apply": "Usa Elo FIDE ({count})",
+    "applyConfirm": "Sostituire {count, plural, one {# Elo} other {# Elo}} con l'Elo FIDE attuale?",
+    "pending": "{count, plural, one {# iscrizione attende} other {# iscrizioni attendono}} l'approvazione",
+    "pendingHint": "Controlla la lista, poi approvala in un colpo solo.",
+    "pendingFlagged": "{count, plural, one {# giocatore ha} other {# giocatori hanno}} una segnalazione. Correggi o avvisa, poi approva la lista.",
+    "approve": "Approva lista giocatori",
+    "new": "Nuovo",
+    "warned": "Avvisato",
+    "updated": "Aggiornato dal giocatore",
+    "fideRecord": "Scheda FIDE",
+    "fideUnrated": "senza Elo FIDE",
+    "warnedWith": "Avviso inviato"
+  },
+  "warn": {
+    "warn": "Avvisa",
+    "note": "Cosa deve correggere il giocatore?",
+    "notePlaceholder": "es. Il tuo ID FIDE non corrisponde al tuo nome.",
+    "hint": "Il giocatore riceve un link privato per correggere l'iscrizione.",
+    "send": "Invia email di avviso",
+    "makeLink": "Crea link di correzione",
+    "emailed": "Email inviata. Puoi anche condividere il link:",
+    "emailFailed": "Non è stato possibile inviare l'email. Condividi questo link con il giocatore:",
+    "noEmail": "Questo giocatore non ha email. Condividi con lui questo link:",
+    "emailSubject": "Controlla la tua iscrizione a {tournament}",
+    "emailBody": "Ciao {name},\n\nl'organizzatore di {tournament} ti chiede di controllare la tua iscrizione.\n\n{note}\n\nCorreggila qui: {link}\n"
+  },
+  "register": {
+    "title": "Iscrizione",
+    "closed": "Le iscrizioni a questo torneo sono chiuse.",
+    "rating": "Elo FIDE",
+    "ratingType": {
+      "fide": "Ho un ID FIDE",
+      "unrated": "Senza Elo"
+    },
+    "ratingTypeHint": {
+      "fide": "Cerchiamo il tuo Elo su FIDE.",
+      "unrated": "Non ho ancora un Elo FIDE."
+    },
+    "check": "Verifica",
+    "checking": "Verifica…",
+    "fideRating": "Elo FIDE {rating}",
+    "fideUnrated": "senza Elo FIDE",
+    "fideStatus": {
+      "notFound": "Non troviamo questo ID FIDE. Controlla il numero o scegli Senza Elo.",
+      "unverified": "Al momento non riusciamo a contattare FIDE. Puoi iscriverti comunque: l'organizzatore verificherà il tuo Elo."
+    },
+    "submit": "Iscriviti",
+    "save": "Salva modifiche",
+    "saved": "Salvato. L'organizzatore ricontrollerà la tua iscrizione.",
+    "done": "Sei iscritto!",
+    "doneHint": "L'organizzatore controllerà la lista giocatori prima dell'inizio del torneo.",
+    "keepLink": "Conserva questo link privato per vedere o modificare la tua iscrizione:",
+    "yourRegistration": "La tua iscrizione",
+    "approved": "approvata",
+    "waiting": "in attesa di approvazione",
+    "organizerNote": "Messaggio dell'organizzatore",
+    "locked": "Sei già stato abbinato, quindi non puoi più modificare l'iscrizione qui. Parla con l'organizzatore.",
+    "errors": {
+      "closed": "Le iscrizioni sono chiuse.",
+      "alreadyRegistered": "Qualcuno con questa email o questo ID FIDE è già iscritto.",
+      "ratingType": "Scegli ID FIDE o Senza Elo.",
+      "notFound": "Questo link non è valido.",
+      "locked": "La tua iscrizione non può più essere modificata."
+    },
+    "emailSubject": "Sei iscritto a {name}",
+    "emailBody": "Ciao {name},\n\ngrazie per esserti iscritto a {tournament}. L'organizzatore controllerà la lista giocatori prima dell'inizio.\n\nVedi o modifica la tua iscrizione: {link}\n",
+    "declaredRating": "Il tuo Elo FIDE attuale",
+    "declaredRatingHint": "Lascia vuoto se su FIDE risulti senza Elo. L'organizzatore lo verificherà."
   }
 }

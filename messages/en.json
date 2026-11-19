@@ -110,7 +110,12 @@
     "flags": {
       "duplicateFide": "Same FIDE ID as another player",
       "duplicateName": "Possible duplicate",
-      "noFide": "No FIDE ID"
+      "noFide": "No FIDE ID",
+      "duplicateEmail": "Same email as another player",
+      "fideNotFound": "FIDE ID not found",
+      "fideUnverified": "FIDE not reachable, check again",
+      "fideNameMismatch": "Name differs from FIDE",
+      "fideRatingDiff": "Rating differs from FIDE"
     },
     "player": "Player",
     "rounds": "Rounds",
@@ -119,7 +124,8 @@
     "withdraw": "Withdraw",
     "reinstate": "Reinstate",
     "withdrawn": "Withdrawn",
-    "no": "No."
+    "no": "No.",
+    "edit": "Edit"
   },
   "player": {
     "firstName": "First name",
@@ -137,8 +143,12 @@
       "rating": "Rating must be between 1000 and 3000, or empty for unrated.",
       "fideId": "A FIDE ID contains only digits.",
       "email": "That email doesn't look right.",
-      "birthYear": "Enter a valid birth year."
-    }
+      "birthYear": "Enter a valid birth year.",
+      "firstName": "Enter a first name.",
+      "notFound": "This player no longer exists."
+    },
+    "edit": "Edit player",
+    "save": "Save changes"
   },
   "import": {
     "title": "Import players",
@@ -165,7 +175,9 @@
   "common": {
     "cancel": "Cancel",
     "back": "Back",
-    "optional": "optional"
+    "optional": "optional",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "rounds": {
     "title": "Round {n}",
@@ -204,7 +216,8 @@
       "resultsEntered": "Results have been entered in this round, so it can't be undone. Clear them first.",
       "badResult": "Unknown result.",
       "badGame": "That game doesn't exist.",
-      "unknown": "Something went wrong. Please try again."
+      "unknown": "Something went wrong. Please try again.",
+      "notApproved": "Some registrations are still waiting for approval. Approve the player list first."
     }
   },
   "standings": {
@@ -226,6 +239,90 @@
     "players": "Players",
     "organizerView": "Organizer view",
     "copyLink": "Copy link",
-    "copied": "Link copied"
+    "copied": "Link copied",
+    "register": "Register for this tournament",
+    "entries": "{count, plural, one {# entry} other {# entries}}",
+    "pendingEntry": "pending",
+    "unrated": "unrated"
+  },
+  "registration": {
+    "selfSignup": "Self-signup",
+    "open": "open",
+    "closed": "closed",
+    "openHint": "Players can register on the public page. Share this link:",
+    "closedHint": "Open it to let players register themselves on the public page.",
+    "openAction": "Open registration",
+    "close": "Close registration",
+    "fideHint": "{count, plural, one {# player has} other {# players have}} a FIDE ID.",
+    "recheck": "Check FIDE IDs",
+    "checking": "Checking…",
+    "apply": "Use FIDE ratings ({count})",
+    "applyConfirm": "Replace {count, plural, one {# rating} other {# ratings}} with the current FIDE rating?",
+    "pending": "{count, plural, one {# registration waits} other {# registrations wait}} for approval",
+    "pendingHint": "Review the list, then approve it in one go.",
+    "pendingFlagged": "{count, plural, one {# player has} other {# players have}} a flag. Fix or warn them, then approve the list.",
+    "approve": "Approve player list",
+    "new": "New",
+    "warned": "Warned",
+    "updated": "Updated by player",
+    "fideRecord": "FIDE record",
+    "fideUnrated": "unrated on FIDE",
+    "warnedWith": "Warning sent"
+  },
+  "warn": {
+    "warn": "Warn",
+    "note": "What should the player fix?",
+    "notePlaceholder": "e.g. Your FIDE ID doesn't match your name.",
+    "hint": "The player gets a private link to fix their registration.",
+    "send": "Send warning email",
+    "makeLink": "Make fix link",
+    "emailed": "Email sent. You can also share the link:",
+    "emailFailed": "The email couldn't be sent. Share this link with the player:",
+    "noEmail": "This player has no email. Share this link with them:",
+    "emailSubject": "Please check your registration for {tournament}",
+    "emailBody": "Hi {name},\n\nThe organizer of {tournament} asks you to check your registration.\n\n{note}\n\nFix it here: {link}\n"
+  },
+  "register": {
+    "title": "Register",
+    "closed": "Registration for this tournament is closed.",
+    "rating": "FIDE rating",
+    "ratingType": {
+      "fide": "I have a FIDE ID",
+      "unrated": "Unrated"
+    },
+    "ratingTypeHint": {
+      "fide": "We look up your rating on FIDE.",
+      "unrated": "No FIDE rating yet."
+    },
+    "check": "Check",
+    "checking": "Checking…",
+    "fideRating": "FIDE rating {rating}",
+    "fideUnrated": "unrated on FIDE",
+    "fideStatus": {
+      "notFound": "We couldn't find this FIDE ID. Check the number, or choose Unrated.",
+      "unverified": "We couldn't reach FIDE right now. You can still register; the organizer will check your rating."
+    },
+    "submit": "Register",
+    "save": "Save changes",
+    "saved": "Saved. The organizer will review your registration again.",
+    "done": "You're registered!",
+    "doneHint": "The organizer will review the player list before the tournament starts.",
+    "keepLink": "Keep this private link to view or change your registration:",
+    "yourRegistration": "Your registration",
+    "approved": "approved",
+    "waiting": "waiting for approval",
+    "organizerNote": "Message from the organizer",
+    "locked": "You are already paired, so your registration can't be changed here any more. Please talk to the organizer.",
+    "errors": {
+      "closed": "Registration is closed.",
+      "alreadyRegistered": "Someone with this email or FIDE ID is already registered.",
+      "ratingType": "Choose FIDE ID or Unrated.",
+      "notFound": "This link is not valid.",
+      "locked": "Your registration can't be changed any more."
+    },
+    "emailSubject": "You're registered for {name}",
+    "emailBody": "Hi {name},\n\nThanks for registering for {tournament}. The organizer will review the player list before the start.\n\nView or change your registration: {link}\n",
+    "declaredRating": "Your current FIDE rating",
+    "declaredRatingHint": "Leave empty if FIDE lists you as unrated. The organizer will check it."
   }
 }

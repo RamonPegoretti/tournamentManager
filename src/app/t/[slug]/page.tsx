@@ -57,6 +57,9 @@ export default async function PublicTournament({ params, searchParams }: Props) 
         <p className="mt-1 text-sm text-muted">
           {[tf(tour.format), tour.location, tour.timeControl, t("players") + ": " + data.players.length].filter(Boolean).join(" · ")}
         </p>
+        {tour.registrationOpen && (
+          <Link href={`/t/${slug}/register`} className="btn-primary mt-3 w-full sm:w-auto">{t("register")}</Link>
+        )}
         {tour.status === "running" && (
           <p className="mt-1 flex items-center gap-2 text-xs text-ok">
             <span className="h-2 w-2 animate-pulse rounded-full bg-ok" /> {ts("live")} · {ts("updated")}
@@ -71,7 +74,27 @@ export default async function PublicTournament({ params, searchParams }: Props) 
 
       {tab === "pairings" &&
         (data.currentRound === 0 ? (
-          <div className="card p-8 text-center text-muted">{t("notStarted")}</div>
+          <section className="space-y-3">
+            <div className="card p-4 text-center text-sm text-muted">{t("notStarted")}</div>
+            {data.players.length > 0 && (
+              <div className="card divide-y divide-line/60">
+                <p className="px-4 py-2 text-xs uppercase tracking-wide text-muted">{t("entries", { count: data.players.length })}</p>
+                {[...data.players]
+                  .sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1) || a.lastName.localeCompare(b.lastName))
+                  .map((p, i) => (
+                    <div key={p.id} className="flex items-center gap-3 px-4 py-2 text-sm">
+                      <span className="w-6 text-right tabular-nums text-muted">{i + 1}</span>
+                      <span className="flex-1 font-medium">
+                        {displayName(p)}
+                        {p.federation && <span className="ml-2 text-xs text-muted">{p.federation}</span>}
+                        {!p.approved && <span className="chip ml-2 border-warn/50 text-warn">{t("pendingEntry")}</span>}
+                      </span>
+                      <span className="tabular-nums text-muted">{p.rating ?? t("unrated")}</span>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </section>
         ) : (
           <section className="space-y-3">
             <div className="flex flex-wrap gap-2">
