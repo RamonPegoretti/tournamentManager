@@ -34,6 +34,7 @@ export default async function TournamentLayout({ children, params }: { children:
           { href: `/dashboard/t/${id}`, label: t("players"), match: ["", "/import"] },
           { href: `/dashboard/t/${id}/rounds`, label: t("rounds"), match: ["/rounds"], badge: pending },
           { href: `/dashboard/t/${id}/standings`, label: t("standings"), match: ["/standings"] },
+          { href: `/dashboard/t/${id}/export`, label: t("export"), match: ["/export"] },
           { href: `/dashboard/t/${id}/settings`, label: t("settings"), match: ["/settings"] },
         ]}
         base={`/dashboard/t/${id}`}

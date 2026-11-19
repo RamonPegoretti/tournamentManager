@@ -133,7 +133,8 @@
     "reinstate": "Reinstate",
     "withdrawn": "Withdrawn",
     "no": "No.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "export": "Export"
   },
   "player": {
     "firstName": "First name",
@@ -275,7 +276,8 @@
     "entries": "{count, plural, one {# entry} other {# entries}}",
     "pendingEntry": "pending",
     "unrated": "unrated",
-    "report": "Report result"
+    "report": "Report result",
+    "print": "Print"
   },
   "registration": {
     "selfSignup": "Self-signup",
@@ -394,5 +396,30 @@
       "sameResult": "That's already the result.",
       "knockoutDraw": "A knockout game can't end in a draw."
     }
+  },
+  "print": {
+    "board": "Bd",
+    "white": "White",
+    "black": "Black",
+    "pts": "Pts",
+    "result": "Result",
+    "nothing": "Nothing to print yet.",
+    "pairingsRound": "Pairings, round {n}",
+    "print": "Print / Save as PDF"
+  },
+  "export": {
+    "printTitle": "Print or PDF",
+    "printPairings": "Pairings of round {n}",
+    "printStandings": "Current standings",
+    "printHint": "Opens a printable page. Use Print → Save as PDF for a PDF.",
+    "filesTitle": "Files",
+    "playersCsv": "Players (CSV)",
+    "playersCsvHint": "Everyone with rating, FIDE ID, club, team and email.",
+    "pairingsCsv": "Pairings and results (CSV)",
+    "pairingsCsvHint": "Every game of every round.",
+    "standingsCsv": "Standings (CSV)",
+    "standingsCsvHint": "Ranks, points and tiebreaks after the last complete round.",
+    "trf": "FIDE report (TRF)",
+    "trfHint": "TRF-16 file of all complete rounds, for rating submission."
   }
 }

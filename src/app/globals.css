@@ -67,3 +67,17 @@ body {
 @utility chip {
     @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium;
   }
+
+/* Printable pages: plain black on white, no app chrome. */
+@media print {
+  html {
+    color-scheme: light;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  @page {
+    margin: 12mm;
+  }
+}

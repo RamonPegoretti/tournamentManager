@@ -133,7 +133,8 @@
     "reinstate": "Reintegra",
     "withdrawn": "Ritirato",
     "no": "N.",
-    "edit": "Modifica"
+    "edit": "Modifica",
+    "export": "Esporta"
   },
   "player": {
     "firstName": "Nome",
@@ -275,7 +276,8 @@
     "entries": "{count, plural, one {# iscritto} other {# iscritti}}",
     "pendingEntry": "in attesa",
     "unrated": "senza Elo",
-    "report": "Segnala risultato"
+    "report": "Segnala risultato",
+    "print": "Stampa"
   },
   "registration": {
     "selfSignup": "Iscrizione online",
@@ -394,5 +396,30 @@
       "sameResult": "Il risultato è già questo.",
       "knockoutDraw": "Una partita a eliminazione diretta non può finire patta."
     }
+  },
+  "print": {
+    "board": "Sc",
+    "white": "Bianco",
+    "black": "Nero",
+    "pts": "Pt",
+    "result": "Risultato",
+    "nothing": "Ancora niente da stampare.",
+    "pairingsRound": "Abbinamenti, turno {n}",
+    "print": "Stampa / Salva in PDF"
+  },
+  "export": {
+    "printTitle": "Stampa o PDF",
+    "printPairings": "Abbinamenti del turno {n}",
+    "printStandings": "Classifica attuale",
+    "printHint": "Apre una pagina stampabile. Usa Stampa → Salva come PDF per avere il PDF.",
+    "filesTitle": "File",
+    "playersCsv": "Giocatori (CSV)",
+    "playersCsvHint": "Tutti i giocatori con Elo, ID FIDE, circolo, squadra ed email.",
+    "pairingsCsv": "Abbinamenti e risultati (CSV)",
+    "pairingsCsvHint": "Tutte le partite di tutti i turni.",
+    "standingsCsv": "Classifica (CSV)",
+    "standingsCsvHint": "Posizioni, punti e spareggi dopo l'ultimo turno completo.",
+    "trf": "Rapporto FIDE (TRF)",
+    "trfHint": "File TRF-16 di tutti i turni completi, per l'invio delle variazioni Elo."
   }
 }
